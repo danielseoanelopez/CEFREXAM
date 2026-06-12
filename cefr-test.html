@@ -3,197 +3,335 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Level Test (CEFR)</title>
+<title>English for All &middot; Level Test (CEFR)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary: #1e5fa8;
-    --primary-dark: #15467e;
-    --accent: #f0a330;
-    --bg: #f4f7fb;
-    --card: #ffffff;
-    --text: #2b3440;
-    --muted: #6b7685;
-    --correct: #2e9e5b;
-    --border: #dde4ee;
+    --cyan: #00e5ff;
+    --magenta: #ff3df0;
+    --purple: #9d4dff;
+    --gold: #ffc83d;
+    --bg: #05050e;
+    --panel: rgba(10, 10, 26, 0.92);
+    --text: #eaf7ff;
+    --muted: #7fd9e8;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-    background: var(--bg);
+    font-family: "Share Tech Mono", monospace;
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, #ffffff88 50%, transparent 51%),
+      radial-gradient(1px 1px at 70% 15%, #ffffff66 50%, transparent 51%),
+      radial-gradient(2px 2px at 85% 60%, #9d4dff55 50%, transparent 51%),
+      radial-gradient(1px 1px at 40% 80%, #00e5ff55 50%, transparent 51%),
+      radial-gradient(1px 1px at 10% 65%, #ffffff55 50%, transparent 51%),
+      radial-gradient(2px 2px at 60% 45%, #ff3df044 50%, transparent 51%),
+      radial-gradient(1px 1px at 92% 88%, #ffffff66 50%, transparent 51%);
+    background-size: 520px 520px;
     color: var(--text);
-    line-height: 1.55;
-    padding: 24px 16px 64px;
+    line-height: 1.6;
+    padding: 24px 14px 64px;
+    font-size: 17px;
   }
-  .container { max-width: 720px; margin: 0 auto; }
-  header {
+  .container { max-width: 760px; margin: 0 auto; }
+
+  /* ===== Brand header ===== */
+  .brand {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
   }
+  .brand .mic { font-size: 1.6rem; filter: drop-shadow(0 0 6px var(--cyan)); }
+  .brand .name {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.85rem;
+    color: #fff;
+    text-shadow: 0 0 8px var(--cyan), 0 0 18px var(--cyan);
+  }
+  .brand .name b { color: var(--cyan); }
+  .brand .tag {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  header { text-align: center; margin-bottom: 26px; }
   header h1 {
-    color: var(--primary-dark);
-    font-size: 1.7rem;
-    margin-bottom: 6px;
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(1.1rem, 4.5vw, 1.9rem);
+    color: var(--purple);
+    text-shadow: 0 0 10px var(--purple), 0 0 30px #9d4dff88, 0 0 2px #fff;
+    margin: 14px 0 12px;
+    letter-spacing: 2px;
   }
-  header p { color: var(--muted); font-size: 0.95rem; }
+  header .sub {
+    color: var(--gold);
+    font-size: 0.95rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px #ffc83d66;
+  }
+  header .sub::before, header .sub::after { content: " ✦ "; color: var(--cyan); }
+
+  /* ===== Neon panels ===== */
   .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    background: var(--panel);
+    border: 2px solid var(--cyan);
+    border-radius: 16px;
     padding: 22px 24px;
-    margin-bottom: 16px;
-    box-shadow: 0 1px 4px rgba(20, 40, 80, 0.06);
+    margin-bottom: 18px;
+    box-shadow: 0 0 12px #00e5ff44, inset 0 0 18px #00e5ff11;
   }
+  .card.alt {
+    border-color: var(--magenta);
+    box-shadow: 0 0 12px #ff3df044, inset 0 0 18px #ff3df011;
+  }
+  .panel-title {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.8rem;
+    color: var(--cyan);
+    text-shadow: 0 0 8px var(--cyan);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+  .es { color: var(--muted); font-size: 0.85rem; }
+
   .student-info label {
     display: block;
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin: 10px 0 4px;
+    color: var(--cyan);
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 14px 0 6px;
   }
   .student-info input {
     width: 100%;
-    padding: 9px 12px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 1rem;
+    padding: 10px 14px;
+    background: #060614;
+    border: 2px solid var(--purple);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: "Share Tech Mono", monospace;
+    font-size: 1.05rem;
+    box-shadow: inset 0 0 10px #9d4dff22;
+    outline: none;
   }
+  .student-info input:focus { border-color: var(--cyan); box-shadow: 0 0 10px #00e5ff55; }
+
+  /* ===== Questions ===== */
   .question h3 {
-    font-size: 1rem;
-    margin-bottom: 12px;
+    font-size: 1.05rem;
+    margin-bottom: 14px;
+    color: var(--text);
   }
   .question h3 .qnum {
-    color: var(--primary);
-    margin-right: 6px;
+    display: inline-block;
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.7rem;
+    color: #060614;
+    background: var(--cyan);
+    border-radius: 6px;
+    padding: 4px 7px;
+    margin-right: 10px;
+    box-shadow: 0 0 8px var(--cyan);
   }
+  .card.alt .question h3 .qnum, .card.alt .qnum { background: var(--magenta); box-shadow: 0 0 8px var(--magenta); }
   .option {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 9px 12px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 8px;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px dashed #2a4a6a;
+    border-radius: 10px;
+    margin-bottom: 9px;
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
   }
-  .option:hover { background: #eef4fc; border-color: var(--primary); }
-  .option input { accent-color: var(--primary); }
+  .option:hover {
+    border-color: var(--cyan);
+    background: #00e5ff0e;
+    box-shadow: 0 0 10px #00e5ff33;
+  }
+  .option:has(input:checked) {
+    border: 1px solid var(--gold);
+    background: #ffc83d12;
+    box-shadow: 0 0 10px #ffc83d44;
+  }
+  .option input { accent-color: var(--magenta); transform: scale(1.2); }
+
+  /* ===== Buttons ===== */
   .btn {
     display: inline-block;
-    background: var(--primary);
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.8rem;
+    background: linear-gradient(180deg, var(--magenta), #a31bd6);
     color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 13px 30px;
-    font-size: 1.05rem;
-    font-weight: 600;
+    border: 2px solid #ff8df7;
+    border-radius: 12px;
+    padding: 16px 28px;
     cursor: pointer;
-    transition: background 0.15s;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px #000;
+    box-shadow: 0 0 14px #ff3df077;
+    transition: transform 0.1s, box-shadow 0.15s;
   }
-  .btn:hover { background: var(--primary-dark); }
-  .btn-row { text-align: center; margin-top: 24px; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 0 22px #ff3df0aa; }
+  .btn-row { text-align: center; margin-top: 26px; }
+  .btn-row .es { display: block; margin-top: 10px; }
+
+  /* ===== Progress ===== */
   .progress-wrap {
     position: sticky;
     top: 0;
     background: var(--bg);
-    padding: 10px 0;
+    padding: 12px 0 8px;
     z-index: 10;
   }
   .progress-bar {
-    height: 8px;
-    background: var(--border);
-    border-radius: 4px;
+    height: 12px;
+    background: #0c0c22;
+    border: 1px solid var(--purple);
+    border-radius: 7px;
     overflow: hidden;
+    box-shadow: inset 0 0 8px #000;
   }
   .progress-fill {
     height: 100%;
     width: 0;
-    background: var(--accent);
-    border-radius: 4px;
+    background: linear-gradient(90deg, var(--cyan), var(--magenta));
+    box-shadow: 0 0 12px var(--cyan);
     transition: width 0.25s;
   }
   .progress-label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--muted);
     text-align: right;
-    margin-top: 4px;
+    margin-top: 5px;
+    letter-spacing: 2px;
   }
-  /* Results */
-  #results { display: none; text-align: center; }
-  #results .level-badge {
+
+  /* ===== Results ===== */
+  #results { display: none; text-align: center; border-color: var(--gold); box-shadow: 0 0 18px #ffc83d55, inset 0 0 18px #ffc83d11; }
+  #results .trophy { font-size: 3rem; filter: drop-shadow(0 0 12px var(--gold)); }
+  #results h2 {
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.85rem;
+    color: var(--cyan);
+    text-shadow: 0 0 8px var(--cyan);
+    margin: 12px 0 4px;
+    line-height: 1.9;
+  }
+  .level-badge {
     display: inline-block;
-    background: var(--primary);
+    font-family: "Press Start 2P", monospace;
+    font-size: 2.6rem;
     color: #fff;
-    font-size: 2.4rem;
-    font-weight: 700;
-    border-radius: 14px;
-    padding: 14px 38px;
-    margin: 14px 0;
+    background: linear-gradient(180deg, var(--purple), #5b1fb0);
+    border: 2px solid #c9a0ff;
+    border-radius: 16px;
+    padding: 20px 42px;
+    margin: 16px 0 8px;
+    text-shadow: 0 0 12px var(--purple);
+    box-shadow: 0 0 24px #9d4dff88;
   }
-  #results .score { color: var(--muted); margin-bottom: 12px; }
-  #results .level-desc {
+  .stars { font-size: 1.5rem; letter-spacing: 6px; margin: 8px 0 4px; filter: drop-shadow(0 0 6px var(--gold)); }
+  .stars .off { opacity: 0.22; filter: grayscale(1); }
+  #results .score { color: var(--muted); margin-bottom: 12px; letter-spacing: 2px; }
+  .level-desc {
     text-align: left;
-    background: #eef4fc;
-    border-radius: 10px;
+    background: #00e5ff0d;
+    border: 1px dashed var(--cyan);
+    border-radius: 12px;
     padding: 16px 18px;
     margin: 16px 0;
     font-size: 0.95rem;
   }
+  .rankup {
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    margin: 18px 0 6px;
+    background: linear-gradient(90deg, var(--magenta), var(--purple), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 10px #ff3df066);
+  }
+  .rankup-sub { color: var(--muted); font-size: 0.9rem; letter-spacing: 1px; }
+
   .unanswered-warning {
     display: none;
-    color: #c0392b;
+    color: #ff5d7a;
     text-align: center;
-    margin-top: 12px;
-    font-weight: 600;
+    margin-top: 14px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px #ff5d7a66;
   }
   footer {
     text-align: center;
-    color: var(--muted);
-    font-size: 0.8rem;
-    margin-top: 32px;
+    color: #5a7d99;
+    font-size: 0.85rem;
+    margin-top: 36px;
+    letter-spacing: 2px;
   }
+  footer .b { color: var(--cyan); }
 </style>
 </head>
 <body>
 <div class="container">
 
+  <div class="brand">
+    <div class="mic">🎙️</div>
+    <div class="name">ENGLISH <b>for ALL</b></div>
+    <div class="tag">Rank Up</div>
+  </div>
+
   <header>
-    <h1>English Level Test</h1>
-    <p>Find out your CEFR level (A1 – C2) &middot; 20 questions &middot; about 10 minutes</p>
+    <h1>ENGLISH LEVEL TEST</h1>
+    <p class="sub">Find your CEFR rank (A1 – C2) &middot; 20 questions &middot; ~10 min</p>
   </header>
 
   <div id="intro" class="card student-info">
-    <p><strong>Instructions:</strong> Choose the best option for each question. Answer every question — if you are not sure, choose the answer that seems most natural. Do not use a dictionary or translator. Your result is an estimate of your CEFR level.</p>
-    <label for="studentName">Your name</label>
+    <div class="panel-title">★ HOW TO PLAY · INSTRUCCIONES</div>
+    <p>Choose the best option for each question. If you are not sure, pick the answer that feels most natural. No dictionary, no translator — this is your real level!</p>
+    <p class="es">Elige la mejor opción en cada pregunta, sin diccionario ni traductor. El resultado es una estimación de tu nivel CEFR.</p>
+    <label for="studentName">Player name · Tu nombre</label>
     <input type="text" id="studentName" placeholder="e.g. María García">
     <div class="btn-row">
-      <button class="btn" onclick="startTest()">Start the test</button>
+      <button class="btn" onclick="startTest()">▶ START</button>
+      <span class="es">Pulsa para empezar</span>
     </div>
   </div>
 
   <div id="test" style="display:none">
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="progress-label" id="progressLabel">0 / 20 answered</div>
+      <div class="progress-label" id="progressLabel">0 / 20</div>
     </div>
     <div id="questions"></div>
     <div class="btn-row">
-      <button class="btn" onclick="submitTest()">See my result</button>
-      <p class="unanswered-warning" id="warning">Please answer all the questions before submitting.</p>
+      <button class="btn" onclick="submitTest()">★ SEE MY RANK</button>
+      <p class="unanswered-warning" id="warning">⚠ Please answer all the questions. · Responde todas las preguntas.</p>
     </div>
   </div>
 
   <div id="results" class="card">
-    <h2 id="resultName">Your result</h2>
+    <div class="trophy">🏆</div>
+    <h2 id="resultName">YOUR RANK</h2>
     <div class="level-badge" id="levelBadge">B1</div>
+    <div class="stars" id="starRow"></div>
     <p class="score" id="scoreText"></p>
     <div class="level-desc" id="levelDesc"></div>
-    <p style="font-size:0.9rem; color:var(--muted)">This is an approximate placement. A short speaking interview is recommended to confirm your level.</p>
+    <p class="rankup">RANK UP!</p>
+    <p class="rankup-sub">Practice a little every day and rank up! · Book a short speaking interview to confirm your level.</p>
     <div class="btn-row">
-      <button class="btn" onclick="location.reload()">Take the test again</button>
+      <button class="btn" onclick="location.reload()">↻ PLAY AGAIN</button>
     </div>
   </div>
 
-  <footer>CEFR English Placement Test &middot; Results are indicative only</footer>
+  <footer><span class="b">ENGLISH for ALL</span> · Rank Up · CEFR placement test · Results are indicative only</footer>
 </div>
 
 <script>
@@ -228,27 +366,27 @@ const QUESTIONS = [
   { q: "His remarks were tantamount ____ an admission of guilt.", o: ["with", "for", "to", "of"], a: 2 }
 ];
 
-// Score bands → CEFR level
+// Score bands → CEFR level (stars = rank out of 6)
 const LEVELS = [
-  { min: 0,  level: "A1", name: "Beginner",
+  { min: 0,  level: "A1", name: "Beginner", stars: 1,
     desc: "You can understand and use very basic everyday expressions and simple phrases. You can introduce yourself and ask simple personal questions." },
-  { min: 5,  level: "A2", name: "Elementary",
+  { min: 5,  level: "A2", name: "Elementary", stars: 2,
     desc: "You can communicate in simple, routine situations and describe in simple terms your background and immediate environment." },
-  { min: 9,  level: "B1", name: "Intermediate",
+  { min: 9,  level: "B1", name: "Intermediate", stars: 3,
     desc: "You can deal with most situations while travelling, describe experiences and events, and give brief reasons and explanations for opinions and plans." },
-  { min: 13, level: "B2", name: "Upper-Intermediate",
+  { min: 13, level: "B2", name: "Upper-Intermediate", stars: 4,
     desc: "You can interact with fluency and spontaneity with native speakers, understand complex texts, and produce clear, detailed writing on a wide range of subjects." },
-  { min: 16, level: "C1", name: "Advanced",
+  { min: 16, level: "C1", name: "Advanced", stars: 5,
     desc: "You can use language flexibly and effectively for social, academic and professional purposes, and produce well-structured, detailed text on complex subjects." },
-  { min: 19, level: "C2", name: "Proficiency",
+  { min: 19, level: "C2", name: "Proficiency", stars: 6,
     desc: "You can understand virtually everything you hear or read, and express yourself spontaneously, very fluently and precisely, even in complex situations." }
 ];
 
 function startTest() {
   const container = document.getElementById("questions");
   container.innerHTML = QUESTIONS.map((item, i) => `
-    <div class="card question" id="q${i}">
-      <h3><span class="qnum">${i + 1}.</span>${item.q}</h3>
+    <div class="card question ${i % 2 ? "alt" : ""}" id="q${i}">
+      <h3><span class="qnum">${String(i + 1).padStart(2, "0")}</span>${item.q}</h3>
       ${item.o.map((opt, j) => `
         <label class="option">
           <input type="radio" name="q${i}" value="${j}" onchange="updateProgress()">
@@ -271,7 +409,7 @@ function answeredCount() {
 function updateProgress() {
   const n = answeredCount();
   document.getElementById("progressFill").style.width = (n / QUESTIONS.length * 100) + "%";
-  document.getElementById("progressLabel").textContent = `${n} / ${QUESTIONS.length} answered`;
+  document.getElementById("progressLabel").textContent = `${n} / ${QUESTIONS.length}`;
   document.getElementById("warning").style.display = "none";
 }
 
@@ -299,9 +437,11 @@ function submitTest() {
   }
 
   const name = document.getElementById("studentName").value.trim();
-  document.getElementById("resultName").textContent = name ? `${name}, your result:` : "Your result:";
+  document.getElementById("resultName").textContent = name ? `${name.toUpperCase()} — YOUR RANK:` : "YOUR RANK:";
   document.getElementById("levelBadge").textContent = result.level;
-  document.getElementById("scoreText").textContent = `Score: ${score} / ${QUESTIONS.length} — ${result.name}`;
+  document.getElementById("starRow").innerHTML =
+    "⭐".repeat(result.stars) + `<span class="off">${"⭐".repeat(6 - result.stars)}</span>`;
+  document.getElementById("scoreText").textContent = `SCORE: ${score} / ${QUESTIONS.length} — ${result.name}`;
   document.getElementById("levelDesc").textContent = result.desc;
 
   document.getElementById("test").style.display = "none";

@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
   :root {
     --cyan: #00e5ff;
@@ -210,8 +211,11 @@
   .progress-wrap {
     position: sticky;
     top: 0;
-    background: var(--bg);
-    padding: 12px 0 8px;
+    background: rgba(5, 5, 14, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 0 0 14px 14px;
+    padding: 12px 10px 8px;
     z-index: 10;
   }
   .progress-bar {
@@ -326,12 +330,47 @@
     letter-spacing: 1px;
     text-shadow: 0 0 8px #ff5d7a66;
   }
+  /* ===== Social links ===== */
+  .social {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 26px;
+  }
+  .social a {
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--cyan);
+    border-radius: 12px;
+    background: var(--panel);
+    color: var(--cyan);
+    font-size: 1.35rem;
+    text-decoration: none;
+    box-shadow: 0 0 10px #00e5ff44;
+    transition: transform 0.12s, box-shadow 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .social a:hover {
+    transform: translateY(-3px);
+    color: var(--magenta);
+    border-color: var(--magenta);
+    box-shadow: 0 0 18px #ff3df077;
+  }
+
   footer {
     text-align: center;
-    color: #5a7d99;
+    color: var(--muted);
     font-size: 0.85rem;
-    margin-top: 36px;
+    margin: 36px auto 0;
     letter-spacing: 2px;
+    background: var(--panel);
+    border: 1px dashed #3a5a7a;
+    border-radius: 12px;
+    padding: 12px 20px;
+    width: fit-content;
+    max-width: 100%;
   }
   footer .b { color: var(--cyan); }
 
@@ -374,7 +413,7 @@
   <div id="intro" class="card student-info">
     <div class="panel-title">★ INSTRUCCIONES</div>
     <p>Elige la mejor opción en cada pregunta. Si no estás seguro, marca la respuesta que te suene más natural. Sin diccionario y sin traductor: ¡queremos tu nivel real!</p>
-    <p class="es">Las preguntas están en inglés. El resultado es una estimación de tu nivel CEFR; una breve entrevista oral lo confirma.</p>
+    <p class="es">¿Qué es el CEFR? Es el Marco Común Europeo de Referencia: clasifica los idiomas en seis niveles, de A1 (principiante) a C2 (maestría). Las preguntas están en inglés; el resultado es una estimación y una breve entrevista oral lo confirma.</p>
     <label for="studentName">Tu nombre</label>
     <input type="text" id="studentName" placeholder="e.g. María García">
     <div class="btn-row">
@@ -413,10 +452,35 @@
     </div>
   </div>
 
+  <div class="social" id="socialBar">
+    <a id="soIg" href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a id="soLi" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    <a id="soWa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  </div>
+
   <footer><span class="b">ENGLISH for ALL</span> · Rank Up · Test de nivel CEFR · Resultado orientativo</footer>
 </div>
 
 <script>
+// ===== Social links — fill these in and the icons appear automatically =====
+// instagram: full URL, e.g. "https://instagram.com/englishforall"
+// linkedin:  full URL, e.g. "https://linkedin.com/in/daniel-seoane"
+// whatsapp:  number with country code, no spaces, e.g. "https://wa.me/34600111222"
+const SOCIAL = {
+  instagram: "",
+  linkedin: "",
+  whatsapp: ""
+};
+(function initSocial() {
+  const map = { soIg: SOCIAL.instagram, soLi: SOCIAL.linkedin, soWa: SOCIAL.whatsapp };
+  let visible = 0;
+  for (const [id, url] of Object.entries(map)) {
+    const el = document.getElementById(id);
+    if (url) { el.href = url; visible++; } else { el.style.display = "none"; }
+  }
+  if (!visible) document.getElementById("socialBar").style.display = "none";
+})();
+
 // Each question: text, options, index of correct answer, Spanish feedback.
 // Ordered from A1 to C2 difficulty.
 const QUESTIONS = [

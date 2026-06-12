@@ -333,6 +333,21 @@
   }
   .rankup-sub { color: var(--muted); font-size: 0.9rem; letter-spacing: 1px; }
 
+  .attempts {
+    margin-top: 14px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    text-shadow: 0 0 8px #ffc83d44;
+  }
+  .blocked {
+    display: none;
+    color: #ff5d7a;
+    text-align: center;
+    margin-top: 16px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px #ff5d7a66;
+  }
   .unanswered-warning {
     display: none;
     color: #ff5d7a;
@@ -429,8 +444,10 @@
     <label for="studentName">Tu nombre</label>
     <input type="text" id="studentName" placeholder="e.g. María García">
     <div class="btn-row">
-      <button class="btn" onclick="startTest()">▶ START</button>
+      <button class="btn" id="startBtn" onclick="startTest()">▶ START</button>
       <span class="es">Pulsa para empezar</span>
+      <p class="attempts" id="attemptInfo"></p>
+      <p class="blocked" id="blockedMsg">⚠ Has alcanzado el límite de 3 intentos en este dispositivo.<br>Escríbeme por WhatsApp para una evaluación personalizada.</p>
     </div>
   </div>
 
@@ -492,6 +509,24 @@ const SOCIAL = {
   }
   if (!visible) document.getElementById("socialBar").style.display = "none";
 })();
+
+// ===== Attempt limit (per browser/device via localStorage) =====
+const MAX_ATTEMPTS = 3;
+function getAttempts() {
+  try { return Number(localStorage.getItem("efa_attempts") || 0); } catch (e) { return 0; }
+}
+function addAttempt() {
+  try { localStorage.setItem("efa_attempts", getAttempts() + 1); } catch (e) {}
+}
+function refreshAttemptUI() {
+  const used = Math.min(getAttempts(), MAX_ATTEMPTS);
+  document.getElementById("attemptInfo").textContent = `INTENTOS: ${used} / ${MAX_ATTEMPTS}`;
+  if (used >= MAX_ATTEMPTS) {
+    document.getElementById("startBtn").style.display = "none";
+    document.getElementById("blockedMsg").style.display = "block";
+  }
+}
+refreshAttemptUI();
 
 // Each question: text, options, index of correct answer, Spanish feedback.
 // Ordered from A1 to C2 difficulty.
@@ -561,6 +596,7 @@ const LEVELS = [
 ];
 
 function startTest() {
+  if (getAttempts() >= MAX_ATTEMPTS) { refreshAttemptUI(); return; }
   const container = document.getElementById("questions");
   container.innerHTML = QUESTIONS.map((item, i) => `
     <div class="card question ${i % 2 ? "alt" : ""}" id="q${i}">
@@ -605,6 +641,7 @@ function submitTest() {
     }
     return;
   }
+  addAttempt();
   const mistakes = [];
   QUESTIONS.forEach((item, i) => {
     const chosen = Number(document.querySelector(`input[name="q${i}"]:checked`).value);

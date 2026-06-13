@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English for All &middot; Test de nivel de ingl&eacute;s (CEFR)</title>
+<title>English for All &middot; Test de nivel de ingl&eacute;s (CEFR) — BETA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
     z-index: -1;
     background:
       linear-gradient(rgba(5, 5, 14, 0.68), rgba(5, 5, 14, 0.82)),
-      url("nebula.jpg") center / cover no-repeat;
+      url("nebula.webp") center / cover no-repeat;
   }
   .container { max-width: 760px; margin: 0 auto; }
 
@@ -351,6 +351,13 @@
     margin-top: 14px;
   }
   .wa-btn:hover { box-shadow: 0 0 22px #2fd36baa; }
+  .share-btn {
+    background: linear-gradient(180deg, #19b8d6, #0a6f93);
+    border-color: #9ff1ff;
+    box-shadow: 0 0 14px #19b8d677;
+    margin-right: 10px;
+  }
+  .share-btn:hover { box-shadow: 0 0 22px #19b8d6aa; }
   .social.mini { margin-top: 10px; margin-bottom: 8px; gap: 10px; }
   .social.mini a { width: 42px; height: 42px; font-size: 1.15rem; }
 
@@ -461,7 +468,7 @@
 <div class="container">
 
   <div class="brand">
-    <img class="logo" src="logo.png" alt="English for All — Rank Up">
+    <img class="logo" src="logo.webp" onerror="this.onerror=null;this.src='logo.png'" alt="English for All — Rank Up">
   </div>
 
   <header>
@@ -472,7 +479,8 @@
   <div id="intro" class="card student-info">
     <div class="panel-title">★ INSTRUCCIONES</div>
     <p>Elige la mejor opción en cada pregunta. Si no estás seguro, marca la respuesta que te suene más natural. Sin diccionario y sin traductor: ¡queremos tu nivel real!</p>
-    <div class="cefr-note"><b>¿Qué es el CEFR?</b> Es el Marco Común Europeo de Referencia: clasifica los idiomas en seis niveles, de A1 (principiante) a C2 (Proficiency). Las preguntas están en inglés; el resultado es una estimación y una breve entrevista oral lo confirma.</div>
+    <div class="cefr-note"><b>¿Qué es el CEFR?</b> Es el Marco Común Europeo de Referencia: clasifica los idiomas en seis niveles, de A1 (principiante) a C2 (maestría). Las preguntas están en inglés; el resultado es una estimación y una breve entrevista oral lo confirma.</div>
+    <p class="es">Al enviar el test, tu nombre y tu resultado se comparten con el profesor para poder asesorarte.</p>
     <label for="studentName">Tu nombre</label>
     <input type="text" id="studentName" placeholder="e.g. María García">
     <div class="btn-row">
@@ -502,10 +510,6 @@
     <div class="stars" id="starRow"></div>
     <p class="score" id="scoreText"></p>
     <div class="level-desc" id="levelDesc"></div>
-    <div class="review-box">
-      <div class="panel-title">★ REPASO · TUS FALLOS</div>
-      <div id="reviewList"></div>
-    </div>
     <p class="rankup">RANK UP!</p>
     <p class="rankup-sub">¡Practica un poco cada día y sube de nivel!</p>
     <div class="contact-box">
@@ -522,7 +526,12 @@
       </div>
       <p class="es">Discord: daniel.s.20 · englishforall1990@gmail.com · englishforall.taplink.site</p>
     </div>
+    <div class="review-box">
+      <div class="panel-title">★ REPASO · TUS FALLOS</div>
+      <div id="reviewList"></div>
+    </div>
     <div class="btn-row">
+      <button class="btn share-btn" id="shareBtn" onclick="shareResult()">📣 COMPARTIR</button>
       <button class="btn" onclick="location.reload()">↻ PLAY AGAIN</button>
     </div>
   </div>
@@ -540,6 +549,12 @@
 </div>
 
 <script>
+// ===== Result notifications (Formspree) =====
+// Create a free form at https://formspree.io, then paste its endpoint
+// here (e.g. "https://formspree.io/f/abcdwxyz") to get every result
+// emailed to you. Leave empty to disable.
+const FORM_ENDPOINT = "";
+
 // ===== Contact links =====
 const SOCIAL = {
   whatsapp: "https://wa.me/541123709477",
@@ -665,9 +680,18 @@ const LEVELS = [
     desc: "Interactúas con fluidez y naturalidad con hablantes nativos, comprendes textos complejos y escribes de forma clara y detallada sobre temas diversos." },
   { min: 16, level: "C1", name: "Avanzado", stars: 5,
     desc: "Usas el idioma con flexibilidad y eficacia para fines sociales, académicos y profesionales, y produces textos claros y bien estructurados sobre temas complejos." },
-  { min: 19, level: "C2", name: "Proficiency", stars: 6,
+  { min: 19, level: "C2", name: "Maestría", stars: 6,
     desc: "Comprendes prácticamente todo lo que lees o escuchas y te expresas de forma espontánea, muy fluida y precisa, incluso en situaciones complejas." }
 ];
+
+function shuffledIndices(n) {
+  const a = [...Array(n).keys()];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 function startTest() {
   if (!isTeacher() && getAttempts() >= MAX_ATTEMPTS) { refreshAttemptUI(); return; }
@@ -676,16 +700,31 @@ function startTest() {
     <div class="card question ${i % 2 ? "alt" : ""}" id="q${i}">
       <h3><span class="qnum">${String(i + 1).padStart(2, "0")}</span>${item.q}</h3>
       <div class="opts">
-      ${item.o.map((opt, j) => `
+      ${shuffledIndices(item.o.length).map(j => `
         <label class="option">
           <input type="radio" name="q${i}" value="${j}" onchange="updateProgress()">
-          <span>${opt}</span>
+          <span>${item.o[j]}</span>
         </label>`).join("")}
       </div>
     </div>`).join("");
   document.getElementById("intro").style.display = "none";
   document.getElementById("test").style.display = "block";
   window.scrollTo({ top: 0 });
+}
+
+let lastShare = "";
+function shareResult() {
+  const url = "https://danielseoanelopez.github.io/CEFREXAM/";
+  if (navigator.share) {
+    navigator.share({ text: lastShare, url }).catch(() => {});
+  } else {
+    const btn = document.getElementById("shareBtn");
+    const done = () => {
+      btn.textContent = "✓ COPIADO";
+      setTimeout(() => { btn.textContent = "📣 COMPARTIR"; }, 1500);
+    };
+    try { navigator.clipboard.writeText(lastShare + " " + url).then(done, done); } catch (e) { done(); }
+  }
 }
 
 function answeredCount() {
@@ -740,6 +779,23 @@ function submitTest() {
   const waMsg = `¡Hola Daniel! Hice el English Level Test y mi resultado es ${result.level} (${result.name}), ${score}/${QUESTIONS.length}.` +
     (name ? ` Soy ${name}.` : "") + " Me gustaría una mini-consulta.";
   document.getElementById("waCta").href = SOCIAL.whatsapp + "?text=" + encodeURIComponent(waMsg);
+
+  // Share text for the COMPARTIR button
+  lastShare = `🏆 ¡Saqué ${result.level} (${result.name}) en el English Level Test de ENGLISH for ALL!`;
+
+  // Email the result to the teacher (only if FORM_ENDPOINT is configured)
+  if (FORM_ENDPOINT) {
+    fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: { "Accept": "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre: name || "(sin nombre)",
+        nivel: `${result.level} (${result.name})`,
+        puntuacion: `${score}/${QUESTIONS.length}`,
+        fecha: new Date().toLocaleString("es-AR")
+      })
+    }).catch(() => {});
+  }
 
   // Review of mistakes with Spanish feedback
   const list = document.getElementById("reviewList");

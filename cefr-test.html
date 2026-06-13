@@ -531,7 +531,7 @@
       <div id="reviewList"></div>
     </div>
     <div class="btn-row">
-      <button class="btn share-btn" id="shareBtn" onclick="shareResult()">📣 COMPARTIR</button>
+      <button class="btn share-btn" id="shareBtn" onclick="shareResult()">📣 SHARE</button>
       <button class="btn" onclick="location.reload()">↻ PLAY AGAIN</button>
     </div>
   </div>
@@ -720,8 +720,8 @@ function shareResult() {
   } else {
     const btn = document.getElementById("shareBtn");
     const done = () => {
-      btn.textContent = "✓ COPIADO";
-      setTimeout(() => { btn.textContent = "📣 COMPARTIR"; }, 1500);
+      btn.textContent = "✓ COPIED";
+      setTimeout(() => { btn.textContent = "📣 SHARE"; }, 1500);
     };
     try { navigator.clipboard.writeText(lastShare + " " + url).then(done, done); } catch (e) { done(); }
   }

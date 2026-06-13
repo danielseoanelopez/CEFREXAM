@@ -333,6 +333,27 @@
   }
   .rankup-sub { color: var(--muted); font-size: 0.9rem; letter-spacing: 1px; }
 
+  /* ===== Contact box on results ===== */
+  .contact-box {
+    background: #00e5ff0d;
+    border: 1px solid var(--cyan);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 20px 0 4px;
+    box-shadow: 0 0 10px #00e5ff22;
+    font-size: 0.95rem;
+  }
+  .contact-box b { color: var(--gold); }
+  .wa-btn {
+    background: linear-gradient(180deg, #2fd36b, #128c5e);
+    border-color: #8af2b5;
+    box-shadow: 0 0 14px #2fd36b77;
+    margin-top: 14px;
+  }
+  .wa-btn:hover { box-shadow: 0 0 22px #2fd36baa; }
+  .social.mini { margin-top: 10px; margin-bottom: 8px; gap: 10px; }
+  .social.mini a { width: 42px; height: 42px; font-size: 1.15rem; }
+
   .attempts {
     margin-top: 14px;
     color: var(--gold);
@@ -451,7 +472,7 @@
   <div id="intro" class="card student-info">
     <div class="panel-title">★ INSTRUCCIONES</div>
     <p>Elige la mejor opción en cada pregunta. Si no estás seguro, marca la respuesta que te suene más natural. Sin diccionario y sin traductor: ¡queremos tu nivel real!</p>
-    <div class="cefr-note"><b>¿Qué es el CEFR?</b> Es el Marco Común Europeo de Referencia: clasifica los idiomas en seis niveles, de A1 (principiante) a C2 (maestría). Las preguntas están en inglés; el resultado es una estimación y una breve entrevista oral lo confirma.</div>
+    <div class="cefr-note"><b>¿Qué es el CEFR?</b> Es el Marco Común Europeo de Referencia: clasifica los idiomas en seis niveles, de A1 (principiante) a C2 (Proficiency). Las preguntas están en inglés; el resultado es una estimación y una breve entrevista oral lo confirma.</div>
     <label for="studentName">Tu nombre</label>
     <input type="text" id="studentName" placeholder="e.g. María García">
     <div class="btn-row">
@@ -486,39 +507,64 @@
       <div id="reviewList"></div>
     </div>
     <p class="rankup">RANK UP!</p>
-    <p class="rankup-sub">¡Practica un poco cada día y sube de nivel! Reserva una breve entrevista oral para confirmar tu resultado.</p>
+    <p class="rankup-sub">¡Practica un poco cada día y sube de nivel!</p>
+    <div class="contact-box">
+      <div class="panel-title">★ ¿LISTO PARA SUBIR DE NIVEL?</div>
+      <p>Reserva una <b>mini-consulta gratuita</b>: confirmamos tu nivel con una breve entrevista oral y te propongo un plan a tu medida. La vía más rápida es WhatsApp — tu resultado ya va incluido en el mensaje:</p>
+      <a class="btn wa-btn" id="waCta" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> ESCRÍBEME</a>
+      <p class="es" style="margin-top:12px">También me encuentras aquí:</p>
+      <div class="social mini">
+        <a class="so-ig" href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a class="so-li" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a class="so-dc" href="#" onclick="return copyDiscord(this)" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+        <a class="so-mail" href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a class="so-tap" href="#" target="_blank" rel="noopener" aria-label="Taplink"><i class="fa-solid fa-link"></i></a>
+      </div>
+      <p class="es">Discord: daniel.s.20 · englishforall1990@gmail.com · englishforall.taplink.site</p>
+    </div>
     <div class="btn-row">
       <button class="btn" onclick="location.reload()">↻ PLAY AGAIN</button>
     </div>
   </div>
 
   <div class="social" id="socialBar">
-    <a id="soIg" href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-    <a id="soLi" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-    <a id="soWa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <a class="so-wa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <a class="so-ig" href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a class="so-li" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    <a class="so-dc" href="#" onclick="return copyDiscord(this)" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+    <a class="so-mail" href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    <a class="so-tap" href="#" target="_blank" rel="noopener" aria-label="Taplink"><i class="fa-solid fa-link"></i></a>
   </div>
 
   <footer><span class="b">ENGLISH <em>for ALL</em></span><span class="sep">✦</span>Rank Up<span class="sep">✦</span>Test de nivel CEFR<span class="sep">✦</span>Resultado orientativo</footer>
 </div>
 
 <script>
-// ===== Social links — fill these in and the icons appear automatically =====
-// instagram: full URL, e.g. "https://instagram.com/englishforall"
-// linkedin:  full URL, e.g. "https://linkedin.com/in/daniel-seoane"
-// whatsapp:  number with country code, no spaces, e.g. "https://wa.me/34600111222"
+// ===== Contact links =====
 const SOCIAL = {
+  whatsapp: "https://wa.me/541123709477",
   instagram: "https://www.instagram.com/englishforall_dan/",
   linkedin: "https://www.linkedin.com/in/daniel-s-6572926b/?locale=es",
-  whatsapp: "https://wa.me/541123709477"
+  discord: "daniel.s.20",
+  email: "englishforall1990@gmail.com",
+  taplink: "https://englishforall.taplink.site"
 };
+function copyDiscord(el) {
+  const icon = el.querySelector("i");
+  const done = () => {
+    icon.className = "fa-solid fa-check";
+    setTimeout(() => { icon.className = "fa-brands fa-discord"; }, 1500);
+  };
+  try { navigator.clipboard.writeText(SOCIAL.discord).then(done, done); } catch (e) { done(); }
+  return false;
+}
 (function initSocial() {
-  const map = { soIg: SOCIAL.instagram, soLi: SOCIAL.linkedin, soWa: SOCIAL.whatsapp };
-  let visible = 0;
-  for (const [id, url] of Object.entries(map)) {
-    const el = document.getElementById(id);
-    if (url) { el.href = url; visible++; } else { el.style.display = "none"; }
-  }
-  if (!visible) document.getElementById("socialBar").style.display = "none";
+  document.querySelectorAll(".so-wa").forEach(a => a.href = SOCIAL.whatsapp);
+  document.querySelectorAll(".so-ig").forEach(a => a.href = SOCIAL.instagram);
+  document.querySelectorAll(".so-li").forEach(a => a.href = SOCIAL.linkedin);
+  document.querySelectorAll(".so-mail").forEach(a => a.href = "mailto:" + SOCIAL.email);
+  document.querySelectorAll(".so-tap").forEach(a => a.href = SOCIAL.taplink);
+  document.querySelectorAll(".so-dc").forEach(a => a.title = "Discord: " + SOCIAL.discord + " (clic para copiar)");
 })();
 
 // ===== Attempt limit (per browser/device via localStorage) =====
@@ -619,7 +665,7 @@ const LEVELS = [
     desc: "Interactúas con fluidez y naturalidad con hablantes nativos, comprendes textos complejos y escribes de forma clara y detallada sobre temas diversos." },
   { min: 16, level: "C1", name: "Avanzado", stars: 5,
     desc: "Usas el idioma con flexibilidad y eficacia para fines sociales, académicos y profesionales, y produces textos claros y bien estructurados sobre temas complejos." },
-  { min: 19, level: "C2", name: "Maestría", stars: 6,
+  { min: 19, level: "C2", name: "Proficiency", stars: 6,
     desc: "Comprendes prácticamente todo lo que lees o escuchas y te expresas de forma espontánea, muy fluida y precisa, incluso en situaciones complejas." }
 ];
 
@@ -689,6 +735,11 @@ function submitTest() {
     "⭐".repeat(result.stars) + `<span class="off">${"⭐".repeat(6 - result.stars)}</span>`;
   document.getElementById("scoreText").textContent = `PUNTUACIÓN: ${score} / ${QUESTIONS.length} — ${result.name}`;
   document.getElementById("levelDesc").textContent = result.desc;
+
+  // Pre-filled WhatsApp consultation message with the student's result
+  const waMsg = `¡Hola Daniel! Hice el English Level Test y mi resultado es ${result.level} (${result.name}), ${score}/${QUESTIONS.length}.` +
+    (name ? ` Soy ${name}.` : "") + " Me gustaría una mini-consulta.";
+  document.getElementById("waCta").href = SOCIAL.whatsapp + "?text=" + encodeURIComponent(waMsg);
 
   // Review of mistakes with Spanish feedback
   const list = document.getElementById("reviewList");

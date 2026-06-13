@@ -257,9 +257,9 @@
   #results .trophy { font-size: 3rem; filter: drop-shadow(0 0 12px var(--gold)); }
   #results h2 {
     font-family: "Press Start 2P", monospace;
-    font-size: 0.85rem;
-    color: var(--cyan);
-    text-shadow: 0 0 8px var(--cyan);
+    font-size: 1rem;
+    color: #fff;
+    text-shadow: 0 0 5px #00e5ff88;
     margin: 12px 0 4px;
     line-height: 1.9;
   }
@@ -767,7 +767,8 @@ function submitTest() {
     if (score >= band.min) result = band;
   }
 
-  const name = document.getElementById("studentName").value.trim();
+  // Only the first name — keeps the heading short and private
+  const name = document.getElementById("studentName").value.trim().split(/\s+/)[0] || "";
   document.getElementById("resultName").textContent = name ? `${name.toUpperCase()} — TU NIVEL:` : "TU NIVEL:";
   document.getElementById("levelBadge").textContent = result.level;
   document.getElementById("starRow").innerHTML =

@@ -258,9 +258,9 @@
   #results .trophy { font-size: 3rem; filter: drop-shadow(0 0 12px var(--gold)); }
   #results h2 {
     font-family: "Press Start 2P", monospace;
-    font-size: 0.85rem;
-    color: var(--cyan);
-    text-shadow: 0 0 8px var(--cyan);
+    font-size: 1rem;
+    color: #fff;
+    text-shadow: 0 0 5px #00e5ff88;
     margin: 12px 0 4px;
     line-height: 1.9;
   }
@@ -527,14 +527,14 @@
         <a class="so-mail" href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
         <a class="so-tap" href="#" target="_blank" rel="noopener" aria-label="Taplink"><i class="fa-solid fa-link"></i></a>
       </div>
-      <p class="es">Discord: daniel.s.20 · englishforall1990@gmail.com · englishforall.taplink.site</p>
+      <p class="es">Discord: daniel.s.20 · englishforall1990@gmail.com</p>
     </div>
     <div class="review-box">
       <div class="panel-title">★ REPASO · TUS FALLOS</div>
       <div id="reviewList"></div>
     </div>
     <div class="btn-row">
-      <button class="btn share-btn" id="shareBtn" onclick="shareResult()">📣 COMPARTIR</button>
+      <button class="btn share-btn" id="shareBtn" onclick="shareResult()">📣 SHARE</button>
       <button class="btn" onclick="location.reload()">↻ PLAY AGAIN</button>
     </div>
   </div>
@@ -723,8 +723,8 @@ function shareResult() {
   } else {
     const btn = document.getElementById("shareBtn");
     const done = () => {
-      btn.textContent = "✓ COPIADO";
-      setTimeout(() => { btn.textContent = "📣 COMPARTIR"; }, 1500);
+      btn.textContent = "✓ COPIED";
+      setTimeout(() => { btn.textContent = "📣 SHARE"; }, 1500);
     };
     try { navigator.clipboard.writeText(lastShare + " " + url).then(done, done); } catch (e) { done(); }
   }
@@ -770,7 +770,8 @@ function submitTest() {
     if (score >= band.min) result = band;
   }
 
-  const name = document.getElementById("studentName").value.trim();
+  // Only the first name — keeps the heading short and private
+  const name = document.getElementById("studentName").value.trim().split(/\s+/)[0] || "";
   document.getElementById("resultName").textContent = name ? `${name.toUpperCase()} — TU NIVEL:` : "TU NIVEL:";
   document.getElementById("levelBadge").textContent = result.level;
   document.getElementById("starRow").innerHTML =
@@ -783,7 +784,7 @@ function submitTest() {
     (name ? ` Soy ${name}.` : "") + " Me gustaría una mini-consulta.";
   document.getElementById("waCta").href = SOCIAL.whatsapp + "?text=" + encodeURIComponent(waMsg);
 
-  // Share text for the COMPARTIR button
+  // Share text for the SHARE button
   lastShare = `🏆 ¡Saqué ${result.level} (${result.name}) en el English Level Test de ENGLISH for ALL!`;
 
   // Email the result to the teacher (only if FORM_ENDPOINT is configured)

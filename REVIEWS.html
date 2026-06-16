@@ -92,7 +92,8 @@
   .test-btn { background: linear-gradient(180deg, var(--cyan), #0a6f93); border-color: #9ff1ff; box-shadow: 0 0 14px #19b8d677; color:#04121f; text-shadow:none; }
   .test-btn:hover { box-shadow: 0 0 22px #19b8d6aa; }
 
-  .social { display: flex; gap: 14px; justify-content: center; margin-top: 26px; }
+  .social { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 26px; }
+  .contact-note { text-align: center; color: var(--muted); font-size: 0.82rem; letter-spacing: 1px; margin-top: 12px; }
   .social a { display: inline-flex; width: 48px; height: 48px; align-items: center; justify-content: center; border: 2px solid var(--cyan); border-radius: 12px; background: var(--panel); color: var(--cyan); font-size: 1.35rem; text-decoration: none; box-shadow: 0 0 10px #00e5ff44; transition: transform 0.12s, box-shadow 0.15s, color 0.15s, border-color 0.15s; }
   .social a:hover { transform: translateY(-3px); color: var(--magenta); border-color: var(--magenta); box-shadow: 0 0 18px #ff3df077; }
 
@@ -169,15 +170,21 @@
   </div>
 
   <div class="social">
+    <a href="https://wa.me/5491123709477" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
     <a href="https://instagram.com/englishforall_dan/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://www.linkedin.com/in/daniel-s-6572926b/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    <a href="https://www.linkedin.com/in/daniel-s-6572926b/?locale=es" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
     <a href="https://www.youtube.com/@englishforalldan" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+    <a href="#" onclick="return copyDiscord(this)" title="Discord: daniel.s.20 (clic para copiar)" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+    <a href="mailto:englishforall1990@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    <a href="https://englishforall.taplink.site" target="_blank" rel="noopener" aria-label="Taplink"><i class="fa-solid fa-link"></i></a>
   </div>
+  <p class="contact-note">Discord: daniel.s.20 &middot; englishforall1990@gmail.com</p>
 
   <footer><span class="b">ENGLISH <em>for</em> ALL</span><span class="sep">✦</span>Rank Up<span class="sep">✦</span>Casos de éxito</footer>
 
 </div>
 <script>
+  function copyDiscord(el){var ic=el.querySelector("i");var done=function(){ic.className="fa-solid fa-check";setTimeout(function(){ic.className="fa-brands fa-discord";},1500);};try{navigator.clipboard.writeText("daniel.s.20").then(done,done);}catch(e){done();}return false;}
   (function(){
     var symbols = ["A1","A2","B1","B2","C1","C2","★","✦","▲","◆","↑"];
     function fill(el){

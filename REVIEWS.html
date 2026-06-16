@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 <style>
   :root {
     --cyan: #00e5ff; --magenta: #ff3df0; --purple: #9d4dff; --gold: #ffc83d;
@@ -103,28 +104,30 @@
   footer .sep { color: var(--gold); text-shadow: 0 0 8px #ffc83d88; margin: 0 8px; }
 
   @media (min-width: 860px) { body { font-size: 18px; } .container { max-width: 1000px; } .brand .logo { height: 150px; } header h1 { font-size: 2.2rem; } }
+  #tsparticles { position: fixed; inset: 0; z-index: -1; }
 </style>
 </head>
 <body>
+<div id="tsparticles"></div>
 <div class="side-deco left" id="decoLeft"></div>
 <div class="side-deco right" id="decoRight"></div>
 <div class="container">
 
-  <div class="brand">
+  <div class="brand" data-aos="fade-up">
     <img class="logo" src="logo.png" alt="English for All — Rank Up">
   </div>
 
-  <header>
+  <header data-aos="fade-up" data-aos-delay="80">
     <h1>CASOS DE EXITO</h1>
     <p class="sub">Rank Up Achieved &middot; ★★★★★</p>
   </header>
 
-  <div class="card" style="text-align:center">
+  <div data-aos="fade-up" class="card" style="text-align:center">
     <div class="panel-title">★ COMMUNITY LOG</div>
     <p>Evidencia de avance y dominio lingüístico. Estas son las voces de quienes ya optimizaron su futuro con <b style="color:var(--cyan)">English for All</b>.</p>
   </div>
 
-  <div class="card">
+  <div data-aos="fade-up" class="card">
     <div class="rev-head">
       <img class="rev-av" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUEBAQEAwUEBAQGBQUGCA0ICAcHCBALDAkNExAUExIQEhIUFx0ZFBYcFhISGiMaHB4fISEhFBkkJyQgJh0gISD/2wBDAQUGBggHCA8ICA8gFRIVICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICD/wAARCACEAIQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDdg+W/n3EgFRg1ZmOY8h+nIPrVaaVQ7NjGRgH1rI1PWbSwtj9ouVjHueazcrAotmhJeRLgtLtYVC9+0i7I3IHr2rgrrxRZznIlCJn7x71Wl8fadaII7aF5mHcdDWDmdUaLPUrfUZw4WVm4GBirkN7vvi7sQcYrw66+JWpNxb2qxr7msa88ea/NyLnysf3aSmaexZ9OR3qMcCTPuPWomzLMckjKECvluH4geIrebdFqTBv9oV0+kfF7xBa4+1xRXadPQ1pe5n7NrY98inWGytkJPBKmp7lGuERWYhB3HevJtO+LGk3zpBqNpJZc8ydVHNem2erWV7bJNa3cU8ZHBVucU0yGn1HT3C2nySZwBwB3rESVbmWXexDt90H0rXnRJ5w5IYjoM9qxJbVpdRby28tB/FTuZ8pvWsKLAi47dTV2NVqva4aEAkHHGRVtQgQnoaSbCw0/eO3IWqM1tmXdk+1Xgd3TANQlwcoVO6ncOUSHEce0k+tFLtPrj2oqSzxTxv4/OnStpumyKbkj53znZXlk2o3l7MZrmd53POXbisne1zcSXdzIWBOcnq1DTA9Dx6elQ9WdUEoqxoS3bMR5sm8joAeKjN4/RcD6Vn+cN2AN3sKdl25xgfpSsXzEsl1IW5kqM3XoWqF5F3YA3n9KVmdAMgBj0UVfKQ5D3b7R94bT61NGlzCm4gsn94VVTcH5OSe9a1g8qng8Hgg9KT0HFXYRTqV5wP61dstcvNLulmsriSIg52huD9RRNpfmxme1XB/iT/Cqb6ffvH/o9sfqahSRbi7HsPhf4pabJMsGuK1pI3HnLyp/wr0y2aC/AubaZJrdxlXQ5DV8fuLu1m23UbAepHFej/D7xnc+G76ONpDLpsxAkiY5Ce4q27GDp32Po+FRbrhRlfSrK4bpyPT0qrFdRzW0c9uQ6SjKn1FOBeKTf1U9aq5hYe6HcGV+nahmBAI+961D5kTyltxz6Uqt8xH5GlcLE6gsMs2DRSA8dKKLjPhx+AEzwvSkX/azTioxnrTA/ULHz6mmdBKJAoxjb9OtHLdCTUaqc/OcVbhiDAAdCaBrUI1RV3uOB0GOpqs5xIzk5ar0iLkn+FRxVRowAuO/NJMbRPaoWA4yTXT6VodzfzCKJdsa/ebHeseyjCNH8vQ/rXsvh7Tlg02I7RuIya5as2tjqoQT3KemeGYLeHDEu56sa0hotuq7Vj4+lbsUXtVlbcdcda5NXudtktjj7zwvaXkRWSBWyOuK8417QpfDt2siAm0lOB/smvfVgUDBFYPiPQ4dW0ue1dBllJU+hq4zcXrsRKCkvMl+FWvHU9EfTJpN09mcrnqVr0csAw3fdPSvmHwdrVx4T8aQNOSqo/kTqfQ8Zr6cBjmjDIQyOAyn2PSu2MtLHk1YWkNngEvzRHEg5yKIj5kZDja+MYpYcrlHGCD19almGImcDDY4PvTuZWIoy8abGG4jviimQC8EQEkis3rRRcZ8SZ2delLkYy3Apz8Ecf8A1qjcZ5PT+damgvmZOFX8a0LQExlz0UcVnIpJweB6CtaMhYRGtEtBx3GSf6oj1oWL50z6VLKmAtTKuJwD6VFy0tS3bx48k/7Qr2/Syv2SIf7IrxuOMeTE3+0K9d004tYh/siuOpujtpLc6CMKRVpF4qjC/AFXojkVkbscRiopkBWrGOaoavqFvpmmy3lw2EjGfrRa4r2PJPiJoTQXy65ap+7f5J1Xt6GvWfhzrn9q+EIElfdNafu256r2NeOXGoeIPG19LHbOLPTFyGc9D/jWx8NdVbQ/EsulXj4jc+UTng+hrqXuqzOCqud3R76HYtxggdjU8hVrZhngjrVILIOhzjtnrVmXyvs5AkO8jB9q0ONozo57iJdjANg8H2oqtHGygqXJwTzmipuVY+O34H3SKhCnO5j+dSyB1/j3CoSC3XmulAySLlxjvV1HGcDucVSi4J9hUsJLSIoHOallJmtKCAKnIH2hcd1qK5UgqPapcjzIj/s1lc6LamhEf9DB9GH869VspAlhFIzBVCjLNwK8ogINi/8AssDXQwW2reJkRJpzZ6bGAoUdXrnlG71OiMmlodTeeOtD03KCY3Uo/hjqhF8SryaYC20zEWe4OTT4PDnh3TkVBa/aJfVuas/6PAdsVtFF6KAM1LcEtEXGNRu7djs9M1UahZpMYzGzDlT2rO8URQ3elm3n/wBWxy30rKtdRaGdWyQBwRWlrCPe6VuhG8dx7VmjVqxxN1qFnY2iWltEQoHyQRDLP71xaak8+tNcqrROx4BGMEV09toupaZ4kbWre9Vn24RWXO0elQ6npMz6fJOUUzLJ5+5Vxk966Pcit7tnKnOT2ske4+DfEEeu+H4ZXP8ApEIEco7/AFraknjju1QMCz8Y7GvDfAmuix1WMFsQ3GFce9evmGJ5Q5k4HU+v0pxeljlqQtI1BZRHJIIJPaiq5C5/4+X/AAoqtDLU+LnXD4pNje2KmmikimeKYbXQ4YelbumeF7zUbNbv7RBaxMcIZTgt9K6HJRV2VGDm7RMEIEhJI5ap7TajqT94/pVnVNKutOk2S7ZF7SRnKmqlrE7ShjU3TV0VyuMrNG1ejLIR6VFkAR81fnhzbRuewxWTM3zL2wayWp0SVmaELkRTL6813NjqUNp4ejmlkEaInJPauDiI2uPUV2eh6Vaa14ciWfLKGwVz3FY1EbUm+hz2o+JdYu7czad/o1q52q4GXeuu0nSbK68PWVwIru21PfumupnyHHoBWxY+Gbe2QCGKLA/vLmtiPTsEF33Y6DsKHUja0UHspOXNJmNd26LKrQ5K4xk960tNvPK/dPyh4was3Nsoi5GKxC2J8J2rFnQjbuNMhZxIgGxuRUMmmIYyjKCGGK1NIeOdPJuDtQ9ST0qVlijmkRHEioeDnqKW49meN3NlLo2vy2Zyqk74z7V7J4dvf7T0SC4LAyIPLkzXnvxCiVJrK+TjadrH2rc+Hk/mrdw+cUwAwUHrW0XdJnFWW56ZGrLGBhcUVTBdcj7QOvrRWhwnzD4saC48S6lcwIEjaQAAfQV2ulwwyT2qOoaH7KNg7Z7159dsXJL8lxuauj8K6q8lv9jJzdWnzRju6egp1byjc9DCtQnys0tVtLWCcoWChv4OuBWTHp8QffGg2dsd62JR/p7XEiNJHOu3fjOyi2WKOEQO4DqfkyOorFOyOmcbu5kX+1LdU71y85wM5/irqtZQxqrYwMkYrlLkHJHvW0DlqFpJcKjA+xrtPAd8IpLqydvlJ3r+NcBC+R5Z610nh1/I1SFycbhtNFTYKXxI9ttHSRRzV/ywBnPFctZXewDmtyK8Bj5PFcqZ3ShYZfnMDhPvY4rmbCYJDMs0R+0gnCkfe9K6cfvZeelTta224SPGu4fxY5pMS0OPgh8STbpJtkCk/LEnXHvW1MsmntA7MWV1w/PQ1PqOsWGlgGWQbz0HeseDXl1rVIdMt4N0cp+ZyOlCNPZyaujD8aXKXmlukZz5fzZq/wDCfMl3eSONwEYH0pnjCwjtPDN3Ogwu/wAtSa2PhfaLa+HDdyDa9weMjsK6oqyR5VSSdzvnt0Zt23r70UjXkIYjBPuBRVnGfJt8/wDpMuO3FZ8d1cWdzHd2shjniOVb+hq5dBjNISOrVQeMlW9jWsbWNZ3vc9K8P+KdL1bEMxWyvT96N/uOfUGuiuLaJyEeFZCfurjkn2rwx02hXXp29jXT+HfHOqaPfW7Sst5DCcBJuSvvmsZUOsTqhi9LTR0+qp5q3Fo6lZouSrdRXH3cRKo4HB4P1rp5nlv55dUWXfNOxkZvXPasu6iBR8DCk5+hqIu2hpJcyuYiriXp71v2qtGomXqhD/41lSxbJEcjgit/TXjaBCwzt+RvpTmwpo7K0ufMhSRTwwBratJmYYzXM6QFQfYnG1l+ZD2Za6O1UKa5XodabaNGfU7PS7X7ReS+WnbAyTXOX/jN7kFNPgfPTe4xj8K6pY7aaELNEkgHZhnFZV9o9rOfkjC/TimmhxsnqZVi2kqwuJ9MudVvWGS9w22NT7CrehRxW/iEyxIhlYFnVB8sY9BUS+HpnbaJ5NvpurqdC0SGwTjHmP3q3LQ1dSCi7bsxvGMK6lZabocTAtcSeZLjqFrRhkhsLaK3t/lhjUIox0rj9V12C28QXJS1keaFyjSZ4x6CoD4ptyCTZS7j15rdSVjy/qdd6qOh6L/acafKMEdqK84XxPgYS1IX3NFF0L6hiP5Tzu8A8xz6tVGRQEkoorSJjMoR/N5sZ5WqXIkwDRRXSjkkeh+FnaTSQHOdpwKt6kixyqVGN3B96KK82fxs9en/AA0Y90iiJ17Rn5fan6RI/nhM/Kw5FFFX0YvtHcaUxkt0L4JU4B710MPSiiuWW51xL8LHb1qdSSwoooiSy5AAc+1X4GYOADRRVkM8R1ck69qGTnM7VnZOaKKs+lj/AA4+g8c8k0UUUxn/2Q==" alt="Natalia">
       <div class="rev-who"><div class="rev-name">Natalia 🇬🇧</div><div class="es">★ Hace 9 meses · Verificado</div></div>
@@ -133,7 +136,7 @@
     <p class="rev-quote">Me encanta cómo enseña Daniel. Explica todo con claridad y las clases son divertidas y fáciles de seguir. El tiempo vuela, y por fin siento que estoy aprendiendo inglés de verdad. Lo recomiendo muchísimo.</p>
   </div>
 
-  <div class="card alt">
+  <div data-aos="fade-up" class="card alt">
     <div class="rev-head">
       <div class="rev-av">L</div>
       <div class="rev-who"><div class="rev-name">Lucía 🇪🇸</div><div class="es">★ Hace 9 meses · Verificado</div></div>
@@ -142,7 +145,7 @@
     <p class="rev-quote">Tuve una clase de prueba con él y me gustó muchísimo. Es muy agradable y se nota que pone empeño. Usó ejemplos prácticos y me hizo sentir cómoda desde el principio. Valoro que se adapte y lo haga realmente útil.</p>
   </div>
 
-  <div class="card">
+  <div data-aos="fade-up" class="card">
     <div class="rev-head">
       <img class="rev-av" src="data:image/jpeg;base64,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" alt="David">
       <div class="rev-who"><div class="rev-name">David 🇪🇸</div><div class="es">★ Hace 9 meses · Verificado</div></div>
@@ -151,7 +154,7 @@
     <p class="rev-quote">Daniel es un profesor fantástico. Se adapta a tu nivel, prepara las clases y te hace sentir muy cómodo. Ya sea que busques una certificación o mejorar tu inglés, Daniel es perfecto.</p>
   </div>
 
-  <div class="card alt">
+  <div data-aos="fade-up" class="card alt">
     <div class="rev-head">
       <img class="rev-av" src="data:image/jpeg;base64,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" alt="Caina Max">
       <div class="rev-who"><div class="rev-name">Caina Max 🇺🇸</div><div class="es">★ Hace 9 meses · Verificado</div></div>
@@ -160,9 +163,9 @@
     <p class="rev-quote">Daniel es un tutor increíble, con mucho conocimiento y muy amable. Se preocupa de verdad por el progreso del estudiante: ha invertido en un buen setup de video/audio, prepara muchas lecciones y se involucra según el nivel de cada uno. ¡Lo recomiendo totalmente!</p>
   </div>
 
-  <div class="rankup">RANK UP!</div>
+  <div class="rankup" data-aos="fade-up">RANK UP!</div>
 
-  <div class="contact-box">
+  <div class="contact-box" data-aos="fade-up">
     <div class="panel-title">¿LISTO PARA COMENZAR?</div>
     <p>Agenda tu <b>evaluación gratis</b> y empieza a subir de nivel tu inglés.</p>
     <a class="btn wa-btn" href="https://wa.me/5491123709477?text=Hola%20Dan!%20Vi%20los%20casos%20de%20%C3%A9xito%20y%20quiero%20mi%20evaluaci%C3%B3n%20gratis%20%F0%9F%99%8C"><i class="fa-brands fa-whatsapp"></i> EVALUACION GRATIS</a>
@@ -202,6 +205,37 @@
     fill(document.getElementById("decoLeft"));
     fill(document.getElementById("decoRight"));
   })();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@3/tsparticles.slim.bundle.min.js"></script>
+<script>
+  // Reveal-on-scroll (light fallback: if AOS fails to load, show everything)
+  try {
+    AOS.init({ duration: 700, once: true, offset: 40 });
+    // safety net: never leave content hidden if scroll detection misbehaves
+    setTimeout(function () {
+      document.querySelectorAll("[data-aos]:not(.aos-animate)").forEach(function (el) { el.classList.add("aos-animate"); });
+    }, 4000);
+  } catch (e) {
+    document.querySelectorAll("[data-aos]").forEach(function (el) { el.removeAttribute("data-aos"); });
+  }
+  // Animated particle background — lighter on mobile, richer on desktop
+  try {
+    var mob = window.matchMedia("(max-width: 768px)").matches;
+    tsParticles.load({ id: "tsparticles", options: {
+      fpsLimit: mob ? 30 : 60,
+      particles: {
+        number: { value: mob ? 22 : 85, density: { enable: true, area: 900 } },
+        color: { value: ["#00e5ff", "#ff3df0", "#9d4dff", "#ffffff"] },
+        links: { enable: !mob, color: "#00e5ff", opacity: 0.16, distance: 140, width: 1 },
+        move: { enable: true, speed: mob ? 0.3 : 0.6 },
+        size: { value: { min: 1, max: mob ? 2 : 2.8 } },
+        opacity: { value: { min: 0.25, max: mob ? 0.55 : 0.9 } }
+      },
+      interactivity: { events: { onHover: { enable: !mob, mode: "grab" } }, modes: { grab: { distance: 160, links: { opacity: 0.5 } } } },
+      detectRetina: true
+    }});
+  } catch (e) {}
 </script>
 </body>
 </html>

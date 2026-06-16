@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 <style>
   :root {
     --cyan: #00e5ff; --magenta: #ff3df0; --purple: #9d4dff; --gold: #ffc83d;
@@ -92,23 +93,25 @@
   footer .b em { font-style: normal; color: var(--cyan); }
   footer .sep { color: var(--gold); text-shadow: 0 0 8px #ffc83d88; margin: 0 8px; }
   @media (min-width: 860px) { body { font-size: 18px; } .brand .logo { height: 150px; } header h1 { font-size: 2.2rem; } }
+  #tsparticles { position: fixed; inset: 0; z-index: -1; }
 </style>
 </head>
 <body>
+<div id="tsparticles"></div>
 <div class="side-deco left" id="decoLeft"></div>
 <div class="side-deco right" id="decoRight"></div>
 <div class="container">
 
-  <div class="brand"><img class="logo" src="logo.png" alt="English for All — Rank Up"></div>
+  <div class="brand" data-aos="fade-up"><img class="logo" src="logo.png" alt="English for All — Rank Up"></div>
 
-  <header>
+  <header data-aos="fade-up" data-aos-delay="80">
     <h1>ELIGE TU RANK UP</h1>
     <p class="sub">Planes y precios &middot; A tu medida</p>
   </header>
 
   <div class="grid">
 
-    <div class="plan">
+    <div class="plan" data-aos="fade-up">
       <div class="tier">START</div>
       <div class="pname">Plan Inicio</div>
       <div class="pquote">“The Connection”</div>
@@ -126,7 +129,7 @@
       <a class="btn" href="https://wa.me/5491123709477?text=Hola%20Dan!%20Me%20interesa%20el%20Plan%20Inicio%20(%2440%2Fmes).%20%C2%BFMe%20cuentas%20m%C3%A1s%3F">Elegir Inicio</a>
     </div>
 
-    <div class="plan pop">
+    <div class="plan pop" data-aos="fade-up" data-aos-delay="120">
       <div class="ribbon">★ MAS POPULAR</div>
       <div class="tier">PROFESSIONAL</div>
       <div class="pname">Plan Avanzado</div>
@@ -146,7 +149,7 @@
       <a class="btn" href="https://wa.me/5491123709477?text=Hola%20Dan!%20Me%20interesa%20el%20Plan%20Avanzado%20(%2475%2Fmes).%20%C2%BFMe%20cuentas%20m%C3%A1s%3F">Elegir Avanzado</a>
     </div>
 
-    <div class="plan m">
+    <div class="plan m" data-aos="fade-up" data-aos-delay="240">
       <div class="tier">MASTERY</div>
       <div class="pname">Entrenamiento Intensivo</div>
       <div class="pquote">“Rank Up Mastery”</div>
@@ -201,6 +204,37 @@
     fill(document.getElementById("decoLeft"));
     fill(document.getElementById("decoRight"));
   })();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@3/tsparticles.slim.bundle.min.js"></script>
+<script>
+  // Reveal-on-scroll (light fallback: if AOS fails to load, show everything)
+  try {
+    AOS.init({ duration: 700, once: true, offset: 40 });
+    // safety net: never leave content hidden if scroll detection misbehaves
+    setTimeout(function () {
+      document.querySelectorAll("[data-aos]:not(.aos-animate)").forEach(function (el) { el.classList.add("aos-animate"); });
+    }, 4000);
+  } catch (e) {
+    document.querySelectorAll("[data-aos]").forEach(function (el) { el.removeAttribute("data-aos"); });
+  }
+  // Animated particle background — lighter on mobile, richer on desktop
+  try {
+    var mob = window.matchMedia("(max-width: 768px)").matches;
+    tsParticles.load({ id: "tsparticles", options: {
+      fpsLimit: mob ? 30 : 60,
+      particles: {
+        number: { value: mob ? 22 : 85, density: { enable: true, area: 900 } },
+        color: { value: ["#00e5ff", "#ff3df0", "#9d4dff", "#ffffff"] },
+        links: { enable: !mob, color: "#00e5ff", opacity: 0.16, distance: 140, width: 1 },
+        move: { enable: true, speed: mob ? 0.3 : 0.6 },
+        size: { value: { min: 1, max: mob ? 2 : 2.8 } },
+        opacity: { value: { min: 0.25, max: mob ? 0.55 : 0.9 } }
+      },
+      interactivity: { events: { onHover: { enable: !mob, mode: "grab" } }, modes: { grab: { distance: 160, links: { opacity: 0.5 } } } },
+      detectRetina: true
+    }});
+  } catch (e) {}
 </script>
 </body>
 </html>

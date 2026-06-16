@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 <style>
   :root {
     --cyan: #00e5ff;
@@ -519,24 +520,26 @@
     }
     #reviewList .review-item { margin-bottom: 0; }
   }
+  #tsparticles { position: fixed; inset: 0; z-index: -1; }
 </style>
 </head>
 <body>
+<div id="tsparticles"></div>
 <div class="side-deco left" id="decoLeft"></div>
 <div class="side-deco right" id="decoRight"></div>
 <button class="mute-btn" id="muteBtn" onclick="toggleMute()" aria-label="Sonido">🔊</button>
 <div class="container">
 
-  <div class="brand">
+  <div class="brand" data-aos="fade-up">
     <img class="logo" src="logo.png" alt="English for All — Rank Up">
   </div>
 
-  <header>
+  <header data-aos="fade-up" data-aos-delay="80">
     <h1>ENGLISH LEVEL TEST</h1>
     <p class="sub">Descubre tu nivel CEFR (A1 – C2) &middot; 20 preguntas &middot; ~10 min</p>
   </header>
 
-  <div id="intro" class="card student-info">
+  <div id="intro" class="card student-info" data-aos="fade-up" data-aos-delay="160">
     <div class="panel-title">★ INSTRUCCIONES</div>
     <p>Elige la mejor opción en cada pregunta. Si no estás seguro, marca la respuesta que te suene más natural. Sin diccionario y sin traductor: ¡queremos tu nivel real!</p>
     <div class="cefr-note"><b>¿Qué es el CEFR?</b> Es el Marco Común Europeo de Referencia: clasifica los idiomas en seis niveles, de A1 (principiante) a C2 (maestría). Las preguntas están en inglés; el resultado es una estimación y una breve entrevista oral lo confirma.</div>
@@ -959,9 +962,49 @@ function submitTest() {
   document.getElementById("test").style.display = "none";
   document.getElementById("results").style.display = "block";
   window.scrollTo({ top: 0 });
+  if (window.launchConfetti) launchConfetti();
   victory();
   confettiBurst();
 }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@3/tsparticles.slim.bundle.min.js"></script>
+<script>
+  function launchConfetti(){
+    if (typeof confetti !== "function") return;
+    var c=["#00e5ff","#ff3df0","#9d4dff","#ffc83d"];
+    confetti({particleCount:140,spread:90,startVelocity:45,origin:{y:0.3},colors:c,zIndex:60});
+    setTimeout(function(){confetti({particleCount:90,angle:60,spread:75,origin:{x:0,y:0.65},colors:c,zIndex:60});},150);
+    setTimeout(function(){confetti({particleCount:90,angle:120,spread:75,origin:{x:1,y:0.65},colors:c,zIndex:60});},300);
+  }
+  // Reveal-on-scroll (light fallback: if AOS fails to load, show everything)
+  try {
+    AOS.init({ duration: 700, once: true, offset: 40 });
+    // safety net: never leave content hidden if scroll detection misbehaves
+    setTimeout(function () {
+      document.querySelectorAll("[data-aos]:not(.aos-animate)").forEach(function (el) { el.classList.add("aos-animate"); });
+    }, 4000);
+  } catch (e) {
+    document.querySelectorAll("[data-aos]").forEach(function (el) { el.removeAttribute("data-aos"); });
+  }
+  // Animated particle background — lighter on mobile, richer on desktop
+  try {
+    var mob = window.matchMedia("(max-width: 768px)").matches;
+    tsParticles.load({ id: "tsparticles", options: {
+      fpsLimit: mob ? 30 : 60,
+      particles: {
+        number: { value: mob ? 22 : 85, density: { enable: true, area: 900 } },
+        color: { value: ["#00e5ff", "#ff3df0", "#9d4dff", "#ffffff"] },
+        links: { enable: !mob, color: "#00e5ff", opacity: 0.16, distance: 140, width: 1 },
+        move: { enable: true, speed: mob ? 0.3 : 0.6 },
+        size: { value: { min: 1, max: mob ? 2 : 2.8 } },
+        opacity: { value: { min: 0.25, max: mob ? 0.55 : 0.9 } }
+      },
+      interactivity: { events: { onHover: { enable: !mob, mode: "grab" } }, modes: { grab: { distance: 160, links: { opacity: 0.5 } } } },
+      detectRetina: true
+    }});
+  } catch (e) {}
 </script>
 </body>
 </html>

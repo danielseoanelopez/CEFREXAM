@@ -225,12 +225,12 @@
     tsParticles.load({ id: "tsparticles", options: {
       fpsLimit: mob ? 30 : 60,
       particles: {
-        number: { value: mob ? 22 : 85, density: { enable: true, area: 900 } },
+        number: { value: mob ? 34 : 95 },
         color: { value: ["#00e5ff", "#ff3df0", "#9d4dff", "#ffffff"] },
-        links: { enable: !mob, color: "#00e5ff", opacity: 0.16, distance: 140, width: 1 },
+        links: { enable: !mob, color: "#00e5ff", opacity: 0.22, distance: 145, width: 1 },
         move: { enable: true, speed: mob ? 0.3 : 0.6 },
-        size: { value: { min: 1, max: mob ? 2 : 2.8 } },
-        opacity: { value: { min: 0.25, max: mob ? 0.55 : 0.9 } }
+        size: { value: { min: 1, max: mob ? 2.2 : 3 } },
+        opacity: { value: { min: 0.35, max: mob ? 0.7 : 0.95 } }
       },
       interactivity: { events: { onHover: { enable: !mob, mode: "grab" } }, modes: { grab: { distance: 160, links: { opacity: 0.5 } } } },
       detectRetina: true

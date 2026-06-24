@@ -738,7 +738,7 @@ function copyDiscord(el) {
   return false;
 }
 (function initSocial() {
-  document.querySelectorAll(".so-wa").forEach(a => a.href = SOCIAL.whatsapp + "?text=" + encodeURIComponent("Hey, ¡hola Dan! Te escribo desde la web de English for All. Quiero más info para subir de nivel. ¡Gracias!"));
+  document.querySelectorAll(".so-wa").forEach(a => a.href = SOCIAL.whatsapp + "?text=" + encodeURIComponent("Hey, ¡Hola Dan! Te escribo desde la web de English for All. Quiero más info para subir de nivel. ¡Gracias!"));
   document.querySelectorAll(".so-ig").forEach(a => a.href = SOCIAL.instagram);
   document.querySelectorAll(".so-li").forEach(a => a.href = SOCIAL.linkedin);
   document.querySelectorAll(".so-mail").forEach(a => a.href = "mailto:" + SOCIAL.email);
@@ -943,7 +943,7 @@ function submitTest() {
   document.getElementById("levelDesc").textContent = result.desc;
 
   // Pre-filled WhatsApp consultation message with the student's result
-  const waMsg = `Hey, ¡hola Dan! Hice el English Level Test y me dio ${result.level} (${result.name}), ${score}/${QUESTIONS.length}.` +
+  const waMsg = `Hey, ¡Hola Dan! Hice el English Level Test y me dio ${result.level} (${result.name}), ${score}/${QUESTIONS.length}.` +
     (name ? ` Soy ${name}.` : "") + " Me gustaría una mini-consulta gratis. ¡Gracias!";
   document.getElementById("waCta").href = SOCIAL.whatsapp + "?text=" + encodeURIComponent(waMsg);
 

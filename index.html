@@ -558,7 +558,7 @@
 
   <div id="intro" class="card student-info" data-aos="fade-up" data-aos-delay="160">
     <div class="panel-title">★ INSTRUCCIONES</div>
-    <p>Elige la mejor opción en cada pregunta. Si no estás seguro, marca la respuesta que te suene más natural. Sin diccionario y sin traductor: ¡queremos tu nivel real!</p>
+    <p>Elige la mejor opción en cada pregunta. Si no estás seguro, marca la respuesta que te suene más natural. Sin diccionario y sin traductor: ¡queremos tu nivel real! Las últimas <b>5 preguntas son de listening</b> (audio) — usá auriculares si podés. 🎧</p>
     <div class="cefr-note"><b>¿Qué es el CEFR?</b> Es el Marco Común Europeo de Referencia: clasifica los idiomas en seis niveles, de A1 (principiante) a C2 (maestría). Las preguntas están en inglés; el resultado es una estimación y una breve entrevista oral lo confirma.</div>
     <label for="studentName">Tu nombre</label>
     <input type="text" id="studentName" placeholder="e.g. María García">
@@ -588,7 +588,17 @@
     <div class="level-badge" id="levelBadge">B1</div>
     <div class="stars" id="starRow"></div>
     <p class="score" id="scoreText"></p>
+    <div id="desglose" style="background:#00e5ff0d;border:1px solid var(--cyan);border-radius:12px;padding:14px 18px;margin:14px auto;max-width:440px;text-align:left;box-shadow:0 0 10px #00e5ff22;font-size:0.95rem"></div>
     <div class="level-desc" id="levelDesc"></div>
+    <div class="contact-box" style="border-color:var(--magenta);box-shadow:0 0 10px #ff3df022;text-align:left">
+      <div class="panel-title" style="color:var(--magenta);text-shadow:0 0 8px var(--magenta)">🎤 SPEAKING CHALLENGE (opcional)</div>
+      <p>El test mide gramática y listening. Para completar tu nivel, grabá <b>3 audios cortos</b> con el micrófono del celu y enviámelos por WhatsApp — así evalúo tu <b>speaking</b> y <b>pronunciación</b>.</p>
+      <p class="es" style="margin-top:10px">🟢 <b>1 · Warm-up:</b> Introduce yourself — your name, where you're from, your job, and what you like doing in your free time.</p>
+      <p class="es" style="margin-top:6px">🟡 <b>2 · Describe:</b> Describe your typical day at work or study. What's easy or hard for you about using English?</p>
+      <p class="es" style="margin-top:6px">🔴 <b>3 · Challenge:</b> Explain how a tool or process in your job works — or give your opinion: will AI make learning English easier or harder? Give reasons.</p>
+      <p class="es" style="margin-top:10px">💡 Hablá natural, sin leer. Si un nivel te cuesta, ¡está perfecto! Eso también me dice dónde estás.</p>
+      <div class="btn-row" style="margin-top:14px"><a class="btn wa-btn" id="spkCta" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> ENVIAR MIS 3 AUDIOS</a></div>
+    </div>
     <p class="rankup">RANK UP!</p>
     <p class="rankup-sub">¡Practica un poco cada día y sube de nivel!</p>
     <div class="contact-box">
@@ -783,10 +793,9 @@ refreshAttemptUI();
 
 // Each question: text, options, index of correct answer, Spanish feedback.
 // Ordered from A1 to C2 difficulty.
+// Parte 1: gramática y vocabulario (15, A1->C2). Parte 2: listening (5, fáciles->difíciles).
 const QUESTIONS = [
   // A1
-  { q: "She ____ from Italy.", o: ["is", "are", "be", "am"], a: 0,
-    fb: "El verbo 'to be' con 'she' es 'is': she is, he is, it is." },
   { q: "____ you like coffee?", o: ["Are", "Do", "Does", "Is"], a: 1,
     fb: "Las preguntas en presente simple con 'you' usan el auxiliar 'do'." },
   { q: "I have two ____.", o: ["childs", "childes", "children", "child"], a: 2,
@@ -794,8 +803,6 @@ const QUESTIONS = [
   // A2
   { q: "I ____ to the cinema last Saturday.", o: ["go", "goed", "went", "have gone"], a: 2,
     fb: "Con 'last Saturday' usamos pasado simple. 'Go' es irregular: 'went'." },
-  { q: "She is ____ than her sister.", o: ["more tall", "taller", "tallest", "as tall"], a: 1,
-    fb: "Los adjetivos cortos forman el comparativo con -er: 'taller than'." },
   { q: "We ____ dinner when the phone rang.", o: ["have", "were having", "are having", "had had"], a: 1,
     fb: "Pasado continuo ('were having') para la acción en curso interrumpida por otra." },
   { q: "There isn't ____ milk in the fridge.", o: ["some", "no", "any", "a"], a: 2,
@@ -807,8 +814,6 @@ const QUESTIONS = [
     fb: "Primera condicional: if + presente simple, will + infinitivo." },
   { q: "You ____ smoke in the hospital. It's forbidden.", o: ["don't have to", "mustn't", "shouldn't have", "couldn't"], a: 1,
     fb: "'Mustn't' = prohibición. 'Don't have to' significa que no es necesario." },
-  { q: "The film was really boring, so I turned it ____.", o: ["off", "down", "out", "away"], a: 0,
-    fb: "Phrasal verb 'turn off' = apagar (la tele, la luz...)." },
   // B2
   { q: "By the time we arrived, the concert ____.", o: ["already started", "has already started", "had already started", "was already starting"], a: 2,
     fb: "Past perfect ('had started') para una acción anterior a otra acción pasada." },
@@ -816,20 +821,27 @@ const QUESTIONS = [
     fb: "'I'd rather you' + pasado simple, aunque hablemos del presente o futuro." },
   { q: "The new bridge ____ by the end of next year.", o: ["will have been built", "will be building", "is building", "will have building"], a: 0,
     fb: "Futuro perfecto en pasiva: 'will have been built' (habrá sido construido)." },
-  { q: "She denied ____ the money.", o: ["to steal", "steal", "stealing", "to have steal"], a: 2,
-    fb: "'Deny' va seguido de gerundio (-ing): denied stealing." },
   // C1
   { q: "____ had I closed the door when the alarm went off.", o: ["Rarely", "No sooner", "Hardly", "Only"], a: 2,
     fb: "Inversión formal: 'Hardly had I... when...'. ('No sooner' iría con 'than')." },
-  { q: "He took to running every morning, ____ surprised everyone who knew him.", o: ["that", "what", "which", "who"], a: 2,
-    fb: "'Which' introduce una relativa que se refiere a toda la frase anterior." },
   { q: "The proposal was rejected ____ its potential benefits.", o: ["despite of", "notwithstanding", "however", "even"], a: 1,
     fb: "'Notwithstanding' = a pesar de (formal). Ojo: 'despite' nunca lleva 'of'." },
   // C2
   { q: "Little ____ that the decision would change her life entirely.", o: ["she knew", "did she know", "she did know", "knew she"], a: 1,
     fb: "Tras 'Little' al inicio hay inversión: 'Little did she know...'." },
   { q: "His remarks were tantamount ____ an admission of guilt.", o: ["with", "for", "to", "of"], a: 2,
-    fb: "'Tantamount to' = equivalente a. Siempre con la preposición 'to'." }
+    fb: "'Tantamount to' = equivalente a. Siempre con la preposición 'to'." },
+  // ===== PARTE 2 · LISTENING (audio, fácil -> difícil) =====
+  { q: "When is the meeting?", o: ["Monday at nine", "Sunday at nine", "Monday at five"], a: 0,
+    fb: "Sarah dice: 'our meeting is on Monday at nine'.", audio: "listen1.mp3", listen: true },
+  { q: "What's the problem with the train?", o: ["It's cancelled", "It's 20 minutes late", "It left early"], a: 1,
+    fb: "'delayed by twenty minutes' = retrasado 20 minutos.", audio: "listen2.mp3", listen: true },
+  { q: "Why isn't the report ready?", o: ["He forgot about it", "He's waiting for numbers from finance", "It's already done"], a: 1,
+    fb: "'I'm just waiting for the numbers from finance'.", audio: "listen3.mp3", listen: true },
+  { q: "What's her opinion of remote work?", o: ["It's totally negative", "It has good and bad sides", "She prefers commuting"], a: 1,
+    fb: "'a double-edged sword' = un arma de doble filo (pros y contras).", audio: "listen4.mp3", listen: true },
+  { q: "What does the speaker imply?", o: ["It was a complete surprise", "It was expected, but the timing surprised people", "The board decided on the spot"], a: 1,
+    fb: "'didn't come out of the blue' (no fue sorpresa), pero 'the timing caught everyone off guard'.", audio: "listen5.mp3", listen: true }
 ];
 
 // Score bands → CEFR level (stars = rank out of 6)
@@ -848,6 +860,13 @@ const LEVELS = [
     desc: "Comprendes prácticamente todo lo que lees o escuchas y te expresas de forma espontánea, muy fluida y precisa, incluso en situaciones complejas." }
 ];
 
+// Sub-niveles CEFR por pilar
+function gramSubLevel(s) { // sobre 15
+  if (s >= 14) return "C2"; if (s >= 12) return "C1"; if (s >= 9) return "B2"; if (s >= 6) return "B1"; if (s >= 3) return "A2"; return "A1";
+}
+function listenSubLevel(s) { // sobre 5
+  if (s >= 5) return "C1"; if (s >= 4) return "B2"; if (s >= 3) return "B1"; if (s >= 2) return "A2"; return "A1";
+}
 function shuffledIndices(n) {
   const a = [...Array(n).keys()];
   for (let i = a.length - 1; i > 0; i--) {
@@ -861,9 +880,17 @@ function startTest() {
   if (!isTeacher() && getAttempts() >= MAX_ATTEMPTS) { refreshAttemptUI(); return; }
   startBlip();
   const container = document.getElementById("questions");
-  container.innerHTML = QUESTIONS.map((item, i) => `
+  container.innerHTML = QUESTIONS.map((item, i) => {
+    const divider = (item.listen && (i === 0 || !QUESTIONS[i - 1].listen))
+      ? `<div style="font-family:'Press Start 2P',monospace;font-size:0.72rem;color:var(--gold);text-align:center;margin:28px 0 4px;text-shadow:0 0 10px #ffc83d66;letter-spacing:1px;line-height:1.7">🎧 PARTE 2 · LISTENING<br><span style="font-family:'Share Tech Mono',monospace;font-size:0.8rem;color:var(--muted);text-shadow:none;letter-spacing:1px">Escuchá cada audio (podés repetir) y elegí la respuesta.</span></div>`
+      : "";
+    const player = item.audio
+      ? `<audio controls preload="none" src="${item.audio}" style="width:100%;height:42px;margin:2px 0 12px;filter:drop-shadow(0 0 6px #00e5ff55)"></audio>`
+      : "";
+    return `${divider}
     <div class="card question ${i % 2 ? "alt" : ""}" id="q${i}">
       <h3><span class="qnum">${String(i + 1).padStart(2, "0")}</span>${item.q}</h3>
+      ${player}
       <div class="opts">
       ${shuffledIndices(item.o.length).map(j => `
         <label class="option">
@@ -871,7 +898,8 @@ function startTest() {
           <span>${item.o[j]}</span>
         </label>`).join("")}
       </div>
-    </div>`).join("");
+    </div>`;
+  }).join("");
   document.getElementById("intro").style.display = "none";
   document.getElementById("test").style.display = "block";
   window.scrollTo({ top: 0 });
@@ -928,6 +956,14 @@ function submitTest() {
   });
   const score = QUESTIONS.length - mistakes.length;
 
+  // Sub-scores por pilar: gramática/vocab vs listening
+  let gC = 0, gT = 0, lC = 0, lT = 0;
+  QUESTIONS.forEach((item, i) => {
+    const ok = Number(document.querySelector(`input[name="q${i}"]:checked`).value) === item.a;
+    if (item.listen) { lT++; if (ok) lC++; } else { gT++; if (ok) gC++; }
+  });
+  const gLvl = gramSubLevel(gC), lLvl = listenSubLevel(lC);
+
   let result = LEVELS[0];
   for (const band of LEVELS) {
     if (score >= band.min) result = band;
@@ -942,10 +978,17 @@ function submitTest() {
   document.getElementById("scoreText").textContent = `PUNTUACIÓN: ${score} / ${QUESTIONS.length} — ${result.name}`;
   document.getElementById("levelDesc").textContent = result.desc;
 
+  document.getElementById("desglose").innerHTML =
+    `<div style="font-family:'Press Start 2P',monospace;font-size:0.68rem;color:var(--cyan);text-shadow:0 0 8px var(--cyan);margin-bottom:12px;letter-spacing:1px">★ TU DESGLOSE</div>` +
+    `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #2a4a6a"><span>📝 Gramática y vocabulario</span><span><b style="color:var(--gold)">${gC}/${gT}</b> &middot; <b style="color:var(--cyan)">${gLvl}</b></span></div>` +
+    `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #2a4a6a"><span>🎧 Listening</span><span><b style="color:var(--gold)">${lC}/${lT}</b> &middot; <b style="color:var(--cyan)">${lLvl}</b></span></div>` +
+    `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;color:var(--muted)"><span>🎤 Speaking y pronunciación</span><span>⏳ por evaluar</span></div>`;
+
   // Pre-filled WhatsApp consultation message with the student's result
   const waMsg = `Hey, ¡Hola Dan! Hice el English Level Test y me dio ${result.level} (${result.name}), ${score}/${QUESTIONS.length}.` +
     (name ? ` Soy ${name}.` : "") + " Me gustaría una mini-consulta gratis. ¡Gracias!";
   document.getElementById("waCta").href = SOCIAL.whatsapp + "?text=" + encodeURIComponent(waMsg);
+  document.getElementById("spkCta").href = SOCIAL.whatsapp + "?text=" + encodeURIComponent(`Hey, ¡Hola Dan! Te mando mis 3 audios del Speaking Challenge. En el test me dio ${result.level}. ¡Gracias!`);
 
   // Share text for the SHARE button
   lastShare = `🏆 ¡Saqué ${result.level} (${result.name}) en el English Level Test de ENGLISH for ALL!`;
@@ -959,6 +1002,7 @@ function submitTest() {
         nombre: name || "(sin nombre)",
         nivel: `${result.level} (${result.name})`,
         puntuacion: `${score}/${QUESTIONS.length}`,
+        desglose: `Gram ${gC}/${gT} (${gLvl}) · List ${lC}/${lT} (${lLvl})`,
         fecha: new Date().toLocaleString("es-AR")
       })
     }).catch(() => {});

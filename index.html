@@ -553,7 +553,7 @@
   <div data-aos="fade-up" data-aos-delay="140" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:0 auto 18px">
     <a href="REVIEWS.html" style="display:inline-block;padding:7px 15px;border:1px solid var(--cyan);border-radius:20px;color:var(--cyan);text-decoration:none;font-size:0.82rem;letter-spacing:1px;box-shadow:0 0 8px #00e5ff33"><i class="fa-solid fa-star"></i> Casos de éxito</a>
     <a href="PLANS.html" style="display:inline-block;padding:7px 15px;border:1px solid var(--gold);border-radius:20px;color:var(--gold);text-decoration:none;font-size:0.82rem;letter-spacing:1px;box-shadow:0 0 8px #ffc83d33"><i class="fa-solid fa-tags"></i> Planes y precios</a>
-    <a href="https://discord.gg/t4Be69GNk" target="_blank" rel="noopener" style="display:inline-block;padding:7px 15px;border:1px solid #aab1ff;border-radius:20px;color:#aab1ff;text-decoration:none;font-size:0.82rem;letter-spacing:1px;box-shadow:0 0 8px #5865f244"><i class="fa-brands fa-discord"></i> Servidor Discord</a>
+    <a href="#" onclick="return copyDiscord(this)" style="display:inline-block;padding:7px 15px;border:1px solid #aab1ff;border-radius:20px;color:#aab1ff;text-decoration:none;font-size:0.82rem;letter-spacing:1px;box-shadow:0 0 8px #5865f244"><i class="fa-brands fa-discord"></i> Discord</a>
   </div>
 
   <div id="intro" class="card student-info" data-aos="fade-up" data-aos-delay="160">
@@ -735,7 +735,7 @@ const SOCIAL = {
   whatsapp: "https://wa.me/5491123709477",
   instagram: "https://www.instagram.com/englishforall_dan/",
   linkedin: "https://www.linkedin.com/in/danielseoanelopez/",
-  discord: "https://discord.gg/t4Be69GNk",
+  discord: "daniel.s.20",
   email: "englishforall1990@gmail.com",
   taplink: "https://englishforall.taplink.site"
 };
@@ -754,7 +754,7 @@ function copyDiscord(el) {
   document.querySelectorAll(".so-li").forEach(a => a.href = SOCIAL.linkedin);
   document.querySelectorAll(".so-mail").forEach(a => a.href = "mailto:" + SOCIAL.email);
   document.querySelectorAll(".so-tap").forEach(a => a.href = SOCIAL.taplink);
-  document.querySelectorAll(".so-dc").forEach(a => a.href = SOCIAL.discord);
+  document.querySelectorAll(".so-dc").forEach(a => { a.setAttribute("onclick", "return copyDiscord(this)"); a.title = "Discord: " + SOCIAL.discord + " (clic para copiar)"; });
 })();
 
 // ===== Attempt limit (per browser/device via localStorage) =====
@@ -766,6 +766,8 @@ const MAX_ATTEMPTS = 3;
     const p = new URLSearchParams(location.search);
     if (p.get("profe") === "rankup") localStorage.setItem("efa_teacher", "1");
     if (p.get("reset") === "1") localStorage.removeItem("efa_attempts");
+    const period = new Date().getFullYear() + "-" + (new Date().getMonth() + 1);
+    if (localStorage.getItem("efa_period") !== period) { localStorage.setItem("efa_period", period); localStorage.setItem("efa_attempts", "0"); }
   } catch (e) {}
 })();
 function isTeacher() {

@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>English for All · A2 Final · Examen de salida</title>
 <meta name="robots" content="noindex">
+<meta name="description" content="Examen de salida del nivel A2 → B1 de English for All. 20 preguntas + writing obligatorio + speaking en vivo con el profe.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://danielseoanelopez.github.io/englishforall/a2-final.html">
+<meta property="og:title" content="English for All — Examen A2 Final (A2 → B1)">
+<meta property="og:description" content="El examen de salida del nivel A2: gramática, vocabulario, listening, reading + writing y un oral en vivo con tu profe.">
+<meta property="og:image" content="https://danielseoanelopez.github.io/englishforall/logo.png">
+<meta property="og:image:width" content="1980">
+<meta property="og:image:height" content="1080">
+<meta property="og:site_name" content="English for All">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://danielseoanelopez.github.io/englishforall/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -99,6 +110,8 @@
     <div class="panel-title">★ INSTRUCCIONES</div>
     <p>Este es tu <b>examen de salida del nivel A2</b>. Lo haces <b>en clase con tu profe</b>. Tiene 5 partes: gramática y uso, vocabulario, listening, reading y un <b>writing obligatorio</b>. Al final hacés un <b>mini-oral en vivo</b> con tu profe.</p>
     <div class="note"><b>Para pasar a B1:</b> 80% o más en las partes A–D <b>+</b> writing OK <b>+</b> speaking en vivo OK. Tu profe confirma el RANK UP. Sin diccionario ni traductor.</div>
+    <div style="margin:16px 0 4px"><input id="studentName" type="text" placeholder="Tu nombre" autocomplete="given-name" style="width:100%;padding:11px 14px;background:#10122a;border:2px solid var(--cyan);border-radius:10px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:1rem;outline:none;box-shadow:inset 0 0 10px #00e5ff22"></div>
+    <p class="es" style="font-size:0.8rem;margin-bottom:4px"><i class="fa-solid fa-lock"></i> Tu nombre y tu resultado se le envían a tu profe para tu seguimiento. Nada más.</p>
     <div class="btn-row"><button class="btn" onclick="startExam()">▶ EMPEZAR</button></div>
   </div>
 
@@ -136,6 +149,10 @@
     <div class="desglose" id="desglose"></div>
     <div class="pending" id="pending"></div>
     <p class="rankup" id="rankupLine" style="display:none">RANK UP → B1</p>
+    <div class="contact-box" style="background:#00e5ff0d;border:1px solid var(--cyan);border-radius:12px;padding:16px 18px;margin:16px auto;max-width:480px;box-shadow:0 0 10px #00e5ff22;font-size:0.95rem">
+      <p>Envíale tu resultado y tu <b style="color:var(--gold)">writing</b> a tu profe para confirmar el <b style="color:var(--gold)">RANK UP</b> y tu oral 👇</p>
+      <a class="btn" id="waCta" href="#" target="_blank" rel="noopener" style="background:linear-gradient(180deg,#2fd36b,#128c5e);border-color:#8af2b5;box-shadow:0 0 14px #2fd36b77;color:#fff;text-shadow:0 0 6px #000;margin-top:10px"><i class="fa-brands fa-whatsapp"></i> ENVIAR A MI PROFE</a>
+    </div>
     <div class="review-box"><div class="panel-title">★ REPASO · TUS FALLOS</div><div id="reviewList"></div></div>
     <div class="btn-row"><button class="btn" onclick="location.reload()">↻ REINICIAR</button></div>
   </div>
@@ -144,14 +161,16 @@
     <a class="so-wa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
     <a class="so-dc" href="#" target="_blank" rel="noopener" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
     <a class="so-ig" href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a class="so-li" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
     <a class="so-tap" href="#" target="_blank" rel="noopener" aria-label="Taplink"><i class="fa-solid fa-link"></i></a>
   </div>
   <footer><span class="b">ENGLISH <em>for ALL</em></span><span class="sep">✦</span>Rank Up<span class="sep">✦</span>A2 Final</footer>
 </div>
 
 <script>
-const SOCIAL = { whatsapp:"https://wa.me/5491123709477", instagram:"https://www.instagram.com/englishforall_dan/", discord:"daniel.s.20", taplink:"https://englishforall.taplink.site" };
-(function(){ document.querySelectorAll(".so-wa").forEach(a=>a.href=SOCIAL.whatsapp); document.querySelectorAll(".so-ig").forEach(a=>a.href=SOCIAL.instagram); document.querySelectorAll(".so-dc").forEach(function(a){a.setAttribute("onclick","return copyDiscord(this)");a.title="Discord: "+SOCIAL.discord+" (clic para copiar)";}); document.querySelectorAll(".so-tap").forEach(a=>a.href=SOCIAL.taplink); })();
+const SOCIAL = { whatsapp:"https://wa.me/5491123709477", instagram:"https://www.instagram.com/englishforall_dan/", linkedin:"https://www.linkedin.com/in/danielseoanelopez/", discord:"daniel.s.20", taplink:"https://englishforall.taplink.site" };
+const FORM_ENDPOINT = "https://formspree.io/f/mbdewbrp";
+(function(){ document.querySelectorAll(".so-wa").forEach(a=>a.href=SOCIAL.whatsapp); document.querySelectorAll(".so-ig").forEach(a=>a.href=SOCIAL.instagram); document.querySelectorAll(".so-li").forEach(a=>a.href=SOCIAL.linkedin); document.querySelectorAll(".so-dc").forEach(function(a){a.setAttribute("onclick","return copyDiscord(this)");a.title="Discord: "+SOCIAL.discord+" (clic para copiar)";}); document.querySelectorAll(".so-tap").forEach(a=>a.href=SOCIAL.taplink); })();
 function copyDiscord(el){var r=el.innerHTML;var done=function(){el.innerHTML='<i class="fa-solid fa-check"></i>'+(el.classList.contains("btn")?" ¡COPIADO!":"");setTimeout(function(){el.innerHTML=r;},1500);};try{navigator.clipboard.writeText(SOCIAL.discord).then(done,done);}catch(e){done();}return false;}
 
 const SECTIONS = { A:"PARTE A · GRAMÁTICA Y USO", B:"PARTE B · VOCABULARIO", C:"PARTE C · LISTENING (escucha y responde)", D:"PARTE D · READING" };
@@ -249,6 +268,14 @@ function submitExam(){
   } else {
     document.getElementById("resultName").textContent = "A2 FINAL · A REPASAR";
   }
+
+  const studentName = (document.getElementById("studentName").value || "").trim() || "Alumno/a";
+  const waMsg = `¡Hola Daniel! Soy ${studentName}. Terminé el examen A2 Final. Resultado: ${correct}/${QUESTIONS.length} (${Math.round(pct*100)}%) · ${pass?"APROBADO (auto)":"a repasar"}. Te paso mi writing:\n\n"${wText}"`;
+  document.getElementById("waCta").href = SOCIAL.whatsapp + "?text=" + encodeURIComponent(waMsg);
+  try {
+    fetch(FORM_ENDPOINT, { method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body: JSON.stringify({ _subject:"Examen A2 Final — "+studentName, examen:"A2 Final", nombre:studentName, score:`${correct}/${QUESTIONS.length}`, porcentaje:`${Math.round(pct*100)}%`, resultado: pass?"APROBADO (auto)":"No alcanzado", gramatica:`${sec.A[0]}/${sec.A[1]}`, vocabulario:`${sec.B[0]}/${sec.B[1]}`, listening:`${sec.C[0]}/${sec.C[1]}`, reading:`${sec.D[0]}/${sec.D[1]}`, writing:wText, fecha:new Date().toLocaleString() }) }).catch(function(){});
+  } catch(e){}
 
   const list = document.getElementById("reviewList");
   list.innerHTML = mistakes.length===0

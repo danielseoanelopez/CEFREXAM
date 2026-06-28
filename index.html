@@ -265,6 +265,10 @@
     box-shadow: 0 0 10px #ffc83d44;
   }
   .option input { accent-color: var(--magenta); transform: scale(1.2); }
+  /* "No lo sé" — muted, dashed; lets students skip instead of blind-guessing */
+  .option.idk { border-style: dashed; border-color: #46506e; opacity: 0.85; margin-top: 2px; }
+  .option.idk span { color: var(--muted); font-style: italic; }
+  .option.idk:has(input:checked) { border-style: solid; border-color: var(--gold); }
 
   /* ===== Buttons ===== */
   .btn {
@@ -558,10 +562,12 @@
 
   <div id="intro" class="card student-info" data-aos="fade-up" data-aos-delay="160">
     <div class="panel-title">★ INSTRUCCIONES</div>
-    <p>Elige la mejor opción en cada pregunta. Si no estás seguro, marca la respuesta que te suene más natural. Sin diccionario y sin traductor: ¡queremos tu nivel real! Las últimas <b>5 preguntas son de listening</b> (audio) — usa auriculares si puedes. 🎧</p>
+    <p>Elige la mejor opción en cada pregunta. Si de verdad no la sabes, marca <b>«No lo sé»</b> — es mejor que adivinar, así tu nivel sale más preciso. Sin diccionario y sin traductor: ¡queremos tu nivel real! Las últimas <b>5 preguntas son de listening</b> (audio) — usa auriculares si puedes. 🎧</p>
     <div class="cefr-note"><b>¿Qué es el CEFR?</b> Es el Marco Común Europeo de Referencia: clasifica los idiomas en seis niveles, de A1 (principiante) a C2 (maestría). Las preguntas están en inglés; el resultado es una estimación y una breve entrevista oral lo confirma.</div>
     <label for="studentName">Tu nombre</label>
     <input type="text" id="studentName" placeholder="e.g. María García">
+    <label for="studentContact">Tu WhatsApp o email <span style="color:var(--muted);text-transform:none;letter-spacing:0;font-size:0.8rem">(opcional — para enviarte tu resultado y un mini-plan)</span></label>
+    <input type="text" id="studentContact" placeholder="e.g. +54 9 11 2345-6789 · tu@email.com">
     <div class="btn-row">
       <button class="btn" id="startBtn" onclick="startTest()">▶ START</button>
       <span class="es">Pulsa para empezar</span>
@@ -806,7 +812,7 @@ const QUESTIONS = [
   // A2
   { q: "I ____ to the cinema last Saturday.", o: ["go", "goed", "went", "have gone"], a: 2,
     fb: "Con 'last Saturday' usamos pasado simple. 'Go' es irregular: 'went'." },
-  { q: "We ____ dinner when the phone rang.", o: ["have", "were having", "are having", "had had"], a: 1,
+  { q: "We ____ dinner when the phone rang.", o: ["have", "were having", "are having", "have had"], a: 1,
     fb: "Pasado continuo ('were having') para la acción en curso interrumpida por otra." },
   { q: "There isn't ____ milk in the fridge.", o: ["some", "no", "any", "a"], a: 2,
     fb: "En frases negativas se usa 'any'; 'some' es para afirmativas." },
@@ -818,8 +824,8 @@ const QUESTIONS = [
   { q: "You ____ smoke in the hospital. It's forbidden.", o: ["don't have to", "mustn't", "shouldn't have", "couldn't"], a: 1,
     fb: "'Mustn't' = prohibición. 'Don't have to' significa que no es necesario." },
   // B2
-  { q: "By the time we arrived, the concert ____.", o: ["already started", "has already started", "had already started", "was already starting"], a: 2,
-    fb: "Past perfect ('had started') para una acción anterior a otra acción pasada." },
+  { q: "By the time we arrived, the concert ____.", o: ["already started", "has already started", "had already started", "would already start"], a: 2,
+    fb: "Past perfect ('had already started') para una acción terminada antes de otra acción pasada." },
   { q: "I'd rather you ____ tell anyone about this.", o: ["don't", "didn't", "won't", "not to"], a: 1,
     fb: "'I'd rather you' + pasado simple, aunque hablemos del presente o futuro." },
   { q: "The new bridge ____ by the end of next year.", o: ["will have been built", "will be building", "is building", "will have building"], a: 0,
@@ -839,25 +845,25 @@ const QUESTIONS = [
     fb: "Sarah dice: 'our meeting is on Monday at nine'.", audio: "listen1.mp3", listen: true },
   { q: "What's the problem with the train?", o: ["It's cancelled", "It's 20 minutes late", "It left early"], a: 1,
     fb: "'delayed by twenty minutes' = retrasado 20 minutos.", audio: "listen2.mp3", listen: true },
-  { q: "Why isn't the report ready?", o: ["He forgot about it", "He's waiting for numbers from finance", "It's already done"], a: 1,
-    fb: "'I'm just waiting for the numbers from finance'.", audio: "listen3.mp3", listen: true },
-  { q: "What's her opinion of remote work?", o: ["It's totally negative", "It has good and bad sides", "She prefers commuting"], a: 1,
-    fb: "'a double-edged sword' = un arma de doble filo (pros y contras).", audio: "listen4.mp3", listen: true },
-  { q: "What does the speaker imply?", o: ["It was a complete surprise", "It was expected, but the timing surprised people", "The board decided on the spot"], a: 1,
-    fb: "'didn't come out of the blue' (no fue sorpresa), pero 'the timing caught everyone off guard'.", audio: "listen5.mp3", listen: true }
+  { q: "Why hasn't Tom sent the report?", o: ["He hasn't written his part yet", "He's still waiting for figures from Marketing", "He already sent it this morning"], a: 1,
+    fb: "Tom ya escribió su parte ('the writing's all finished'); lo que falta son las cifras de Marketing ('I can't send it off until Marketing gives me their sales figures').", audio: "listen3.mp3", listen: true },
+  { q: "What's the speaker's overall view of working from home?", o: ["She'd happily go back to the office full-time", "She has doubts but still prefers working from home", "She thinks working from home has no downsides"], a: 1,
+    fb: "Da pros y contras, pero remata: si la obligaran a volver a la oficina, buscaría otro trabajo → prefiere el teletrabajo a pesar de las pegas.", audio: "listen4.mp3", listen: true },
+  { q: "What's the speaker implying about the merger?", o: ["The merger was planned long before it was announced", "Nobody in the company saw the merger coming", "The merger happened by accident, with no real planning"], a: 0,
+    fb: "Idiomas: 'the writing was on the wall' (se veía venir) y rechaza el 'bolt from the blue' (sorpresa total). Da a entender que ya estaba decidido hacía meses; solo sorprendió la rapidez ('how fast they pulled the trigger').", audio: "listen5.mp3", listen: true }
 ];
 
 // Score bands → CEFR level (stars = rank out of 6)
 const LEVELS = [
   { min: 0,  level: "A1", name: "Principiante", stars: 1,
     desc: "Comprendes y usas expresiones cotidianas muy básicas y frases sencillas. Puedes presentarte y hacer preguntas personales simples." },
-  { min: 5,  level: "A2", name: "Elemental", stars: 2,
+  { min: 7,  level: "A2", name: "Elemental", stars: 2,
     desc: "Te comunicas en situaciones sencillas y habituales, y describes en términos simples tu entorno y tus necesidades inmediatas." },
-  { min: 9,  level: "B1", name: "Intermedio", stars: 3,
+  { min: 10, level: "B1", name: "Intermedio", stars: 3,
     desc: "Te desenvuelves en la mayoría de situaciones de un viaje, describes experiencias y acontecimientos, y justificas brevemente tus opiniones y planes." },
-  { min: 13, level: "B2", name: "Intermedio alto", stars: 4,
+  { min: 14, level: "B2", name: "Intermedio alto", stars: 4,
     desc: "Interactúas con fluidez y naturalidad con hablantes nativos, comprendes textos complejos y escribes de forma clara y detallada sobre temas diversos." },
-  { min: 16, level: "C1", name: "Avanzado", stars: 5,
+  { min: 17, level: "C1", name: "Avanzado", stars: 5,
     desc: "Usas el idioma con flexibilidad y eficacia para fines sociales, académicos y profesionales, y produces textos claros y bien estructurados sobre temas complejos." },
   { min: 19, level: "C2", name: "Maestría", stars: 6,
     desc: "Comprendes prácticamente todo lo que lees o escuchas y te expresas de forma espontánea, muy fluida y precisa, incluso en situaciones complejas." }
@@ -867,8 +873,8 @@ const LEVELS = [
 function gramSubLevel(s) { // sobre 15
   if (s >= 14) return "C2"; if (s >= 12) return "C1"; if (s >= 9) return "B2"; if (s >= 6) return "B1"; if (s >= 3) return "A2"; return "A1";
 }
-function listenSubLevel(s) { // sobre 5
-  if (s >= 5) return "C1"; if (s >= 4) return "B2"; if (s >= 3) return "B1"; if (s >= 2) return "A2"; return "A1";
+function listenSubLevel(s) { // sobre 5 — alineado con el badge (llega hasta C2)
+  if (s >= 5) return "C2"; if (s >= 4) return "C1"; if (s >= 3) return "B2"; if (s >= 2) return "B1"; if (s >= 1) return "A2"; return "A1";
 }
 function shuffledIndices(n) {
   const a = [...Array(n).keys()];
@@ -887,8 +893,10 @@ function startTest() {
     const divider = (item.listen && (i === 0 || !QUESTIONS[i - 1].listen))
       ? `<div style="font-family:'Press Start 2P',monospace;font-size:0.72rem;color:var(--gold);text-align:center;margin:28px 0 4px;text-shadow:0 0 10px #ffc83d66;letter-spacing:1px;line-height:1.7">🎧 PARTE 2 · LISTENING<br><span style="font-family:'Share Tech Mono',monospace;font-size:0.8rem;color:var(--muted);text-shadow:none;letter-spacing:1px">Escucha cada audio (puedes repetir) y elige la respuesta.</span></div>`
       : "";
+    // ?v=N busts the browser/GitHub-Pages cache when audio is re-generated under the
+    // same filename. BUMP THIS NUMBER whenever you re-run generate_listening.py.
     const player = item.audio
-      ? `<audio controls preload="none" src="${item.audio}" style="width:100%;height:42px;margin:2px 0 12px;filter:drop-shadow(0 0 6px #00e5ff55)"></audio>`
+      ? `<audio controls preload="none" src="${item.audio}?v=3" style="width:100%;height:42px;margin:2px 0 12px;filter:drop-shadow(0 0 6px #00e5ff55)"></audio>`
       : "";
     return `${divider}
     <div class="card question ${i % 2 ? "alt" : ""}" id="q${i}">
@@ -901,6 +909,10 @@ function startTest() {
           <span>${item.o[j]}</span>
         </label>`).join("")}
       </div>
+      <label class="option idk">
+        <input type="radio" name="q${i}" value="-1" onchange="updateProgress()">
+        <span>🤷 No lo sé</span>
+      </label>
     </div>`;
   }).join("");
   document.getElementById("intro").style.display = "none";
@@ -974,6 +986,8 @@ function submitTest() {
 
   // Only the first name — keeps the heading short and private
   const name = document.getElementById("studentName").value.trim().split(/\s+/)[0] || "";
+  // Optional contact (WhatsApp/email) so the teacher can follow up with leads who don't click through
+  const contact = document.getElementById("studentContact").value.trim();
   document.getElementById("resultName").textContent = name ? `${name.toUpperCase()} — TU NIVEL:` : "TU NIVEL:";
   document.getElementById("levelBadge").textContent = result.level;
   document.getElementById("starRow").innerHTML =
@@ -1006,6 +1020,7 @@ function submitTest() {
         nivel: `${result.level} (${result.name})`,
         puntuacion: `${score}/${QUESTIONS.length}`,
         desglose: `Gram ${gC}/${gT} (${gLvl}) · List ${lC}/${lT} (${lLvl})`,
+        contacto: contact || "(no dejó contacto)",
         fecha: new Date().toLocaleString("es-AR")
       })
     }).catch(() => {});
@@ -1019,7 +1034,7 @@ function submitTest() {
     list.innerHTML = mistakes.map(m => `
       <div class="review-item">
         <p class="rq"><span class="qnum">${String(m.i + 1).padStart(2, "0")}</span>${m.item.q}</p>
-        <p class="wrong">✗ Tu respuesta: ${m.item.o[m.chosen]}</p>
+        <p class="wrong">✗ Tu respuesta: ${m.chosen === -1 ? "🤷 No lo sé" : m.item.o[m.chosen]}</p>
         <p class="right">✓ Correcta: ${m.item.o[m.item.a]}</p>
         <p class="fb">${m.item.fb}</p>
       </div>`).join("");

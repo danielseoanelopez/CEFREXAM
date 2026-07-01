@@ -620,6 +620,7 @@
         <a class="so-li" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         <a class="so-dc" href="#" target="_blank" rel="noopener" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
         <a class="so-mail" href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a class="so-sp" href="#" target="_blank" rel="noopener" aria-label="Superprof" title="Superprof"><i class="fa-solid fa-graduation-cap"></i></a>
         <a class="so-tap" href="#" target="_blank" rel="noopener" aria-label="Taplink"><i class="fa-solid fa-link"></i></a>
       </div>
       <p class="es">Discord: daniel.s.20 · englishforall1990@gmail.com</p>
@@ -640,6 +641,7 @@
     <a class="so-li" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
     <a class="so-dc" href="#" target="_blank" rel="noopener" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
     <a class="so-mail" href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    <a class="so-sp" href="#" target="_blank" rel="noopener" aria-label="Superprof" title="Superprof"><i class="fa-solid fa-graduation-cap"></i></a>
     <a class="so-tap" href="#" target="_blank" rel="noopener" aria-label="Taplink"><i class="fa-solid fa-link"></i></a>
   </div>
 
@@ -743,7 +745,8 @@ const SOCIAL = {
   linkedin: "https://www.linkedin.com/in/danielseoanelopez/",
   discord: "daniel.s.20",
   email: "englishforall1990@gmail.com",
-  taplink: "https://englishforall.taplink.site"
+  taplink: "https://englishforall.taplink.site",
+  superprof: "https://www.superprof.com.ar/ir/20148124-b7eaea"
 };
 function copyDiscord(el) {
   const icon = el.querySelector("i");
@@ -760,6 +763,7 @@ function copyDiscord(el) {
   document.querySelectorAll(".so-li").forEach(a => a.href = SOCIAL.linkedin);
   document.querySelectorAll(".so-mail").forEach(a => a.href = "mailto:" + SOCIAL.email);
   document.querySelectorAll(".so-tap").forEach(a => a.href = SOCIAL.taplink);
+  document.querySelectorAll(".so-sp").forEach(a => a.href = SOCIAL.superprof);
   document.querySelectorAll(".so-dc").forEach(a => { a.setAttribute("onclick", "return copyDiscord(this)"); a.title = "Discord: " + SOCIAL.discord + " (clic para copiar)"; });
 })();
 
